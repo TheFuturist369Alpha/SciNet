@@ -11,17 +11,45 @@
       <nav class="navbar-sidebar">
         <ul class="list-unstyled navbar-list">
           <li>
-            <a href="#">Home</a>
+            <a href="/books">Home</a>
           </li>
           <li>
             <a href="#">Book owners</a>
           </li>
           <li>
-            <a href="#">Login</a>
+            <a href="">Login</a>
           </li>
           <li>
-            <a href="#">Luggage Tags</a>
+            <a routerLink="/category/1" routerLinkActive="active-link">Physics</a>
           </li>
+          <li>
+            <a routerLink="/category/2" routerLinkActive="active-link">Chemistry</a>
+          </li>
+          <li>
+            <a routerLink="/category/3" routerLinkActive="active-link">Biology</a>
+          </li>
+          <li>
+            <a routerLink="/category/4" routerLinkActive="active-link">Philosophy</a>
+          </li>
+          <li>
+            <a routerLink="/category/5" routerLinkActive="active-link">Mechatronics</a>
+          </li>
+          <li>
+            <a routerLink="/category/6" routerLinkActive="active-link">Mathematics</a>
+          </li>
+          <li>
+            <a routerLink="/category/7" routerLinkActive="active-link">Computer science</a>
+          </li>
+          <li>
+            <a routerLink="/category/8" routerLinkActive="active-link">Astronomy</a>
+          </li>
+          <li>
+            <a routerLink="/category/9" routerLinkActive="active-link">Engineering</a>
+          </li>
+          <li>
+            <a routerLink="/category/10" routerLinkActive="active-link">Economics</a>
+          </li>
+        
         </ul>
       </nav>
     </div>
@@ -56,7 +84,8 @@
     <!-- END HEADER DESKTOP-->
 
     <!-- MAIN CONTENT-->
-    <book-list></book-list>
+    <!--<book-list></book-list>-->
+    <router-outlet></router-outlet>
     
   </div>
 
