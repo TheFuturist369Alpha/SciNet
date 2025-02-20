@@ -1,8 +1,8 @@
 import { Component, NgModule, OnInit } from '@angular/core';
-import { Book } from '../Entities/Book/book';
-import { ServiceService } from '../Services/BookService/service.service';
+import { Book } from '../../Entities/Book/book';
+import { ServiceService } from '../../Services/BookService/service.service';
 import { CommonModule, NgFor } from '@angular/common';
-import { Subject } from '../Entities/Subject/subject';
+import { Subject } from '../../Entities/Subject/subject';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

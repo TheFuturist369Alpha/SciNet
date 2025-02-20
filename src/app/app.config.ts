@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { ServiceService } from './Services/BookService/service.service';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { SubjectService } from './Services/SubjectService/subject.service';
 
 
 
@@ -12,5 +13,5 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), 
-    provideClientHydration(withEventReplay()), provideHttpClient(withFetch()), ServiceService]
+    provideClientHydration(withEventReplay()), provideHttpClient(withFetch()), ServiceService, SubjectService]
 };

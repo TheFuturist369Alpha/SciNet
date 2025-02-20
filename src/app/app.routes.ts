@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { BookListComponent } from './Book-list/book-list.component';
+import { BookListComponent } from './components/Book-list/book-list.component';
 
 export const routes: Routes = [
     {path:"category/:id", component: BookListComponent},
