@@ -14,32 +14,55 @@ import { ActivatedRoute } from '@angular/router';
 export class BookListComponent implements OnInit {
 //public Books:Book[]=[new Book(2,"ksk", "ks", 1, "ks", true,new Date(),new Subject(2,"ks"))];
 public Books:Book[]=[];
-public catNum:number=0;
+private catNum:number=0;
+private useSearch:boolean=false;
 
 constructor(private service:ServiceService, public route:ActivatedRoute){
 }
+
+
+
+
   
  ngOnInit(): void{
   this.route.paramMap.subscribe(()=>{this.loadData();});
   
 }
 
-loadData():void{
 
-let hasId: boolean =this.route.snapshot.paramMap.has('id');
 
-if(hasId){
-  this.catNum=+this.route.snapshot.paramMap.get("id")!;
-  this.service.getService(this.catNum).subscribe(data=>{this.Books=data;});
+public loadData():void{
+  this.useSearch=this.route.snapshot.paramMap.has("keyword");
+  if(this.useSearch){
+    this.fromSearch();
+  }
+  else{
+this.fromList();
+  }
   
 }
-else{
-  this.service.getService().subscribe(data=>{this.Books=data;});
+
+
+private fromList():void{
+  let hasId: boolean =this.route.snapshot.paramMap.has('id');
+
+  if(hasId){
+    this.catNum=+this.route.snapshot.paramMap.get("id")!;
+    this.service.getListService(this.catNum).subscribe(data=>{this.Books=data;});
+    
+  }
+  else{
+    this.service.getListService().subscribe(data=>{this.Books=data;});
+  }
 }
 
+private fromSearch():void{
+
+   let paramValue:string=this.route.snapshot.paramMap.get("keyword")!;
+   this.service.getSearchService(paramValue).subscribe(data=>{this.Books=data;});
 
 
-  
+
 }
 
 }

@@ -17,7 +17,9 @@ public subjects:Subject[]=[];
 constructor(private service:SubjectService){}
 
 ngOnInit(): void {
-  this.service.getSubjects().subscribe(data=>{this.subjects=data;});
+  this.service.getSubjects().subscribe(data=>{
+    console.log(data);
+    this.subjects=data;});
 }
 
 
