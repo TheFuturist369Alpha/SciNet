@@ -31,6 +31,11 @@ export class ServiceService {
     return this.httpClient.get<Response>(`${this.baseUrl1}/books/search/findByNameContaining?name=${data}`)
     .pipe(map(data=>data._embedded.books));
    }
+
+
+   getBookService(id:number):Observable<Book>{
+    return this.httpClient.get<Book>(`${this.baseUrl1}/bookapi/getbook?id=${id}`);
+   }
   
 
   

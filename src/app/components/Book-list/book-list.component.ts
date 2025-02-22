@@ -3,11 +3,11 @@ import { Book } from '../../Entities/Book/book';
 import { ServiceService } from '../../Services/BookService/service.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { Subject } from '../../Entities/Subject/subject';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'book-list',
-  imports: [NgFor,CommonModule],
+  imports: [NgFor,CommonModule,RouterModule],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.css'
 })

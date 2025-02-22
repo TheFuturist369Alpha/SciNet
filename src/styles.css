@@ -721,7 +721,7 @@ table.table.table-bordered th{
     color:#062430
 }
 .detail-section{
-    margin-top:60px
+    margin-top:150px;
 }
 /**/
 
@@ -962,6 +962,10 @@ footer ul li{
     }
     a.logo img{
         width:110px
+    }
+
+    .detail-img{
+        width:30%;
     }
 
     .cart-area i{
