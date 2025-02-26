@@ -4,18 +4,23 @@ import { ServiceService } from '../../Services/BookService/service.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { Subject } from '../../Entities/Subject/subject';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'book-list',
-  imports: [NgFor,CommonModule,RouterModule],
+  imports: [NgFor,CommonModule,RouterModule,NgbModule],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.css'
 })
 export class BookListComponent implements OnInit {
 //public Books:Book[]=[new Book(2,"ksk", "ks", 1, "ks", true,new Date(),new Subject(2,"ks"))];
 public Books:Book[]=[];
-private catNum:number=0;
-private useSearch:boolean=false;
+public catNum:number=0;
+public useSearch:boolean=false;
+public pageNum:number=1;
+public pageSize:number=8;
+public totalElements=0;
+private previousCat:number=0;
 
 constructor(private service:ServiceService, public route:ActivatedRoute){
 }
@@ -48,12 +53,28 @@ private fromList():void{
 
   if(hasId){
     this.catNum=+this.route.snapshot.paramMap.get("id")!;
-    this.service.getListService(this.catNum).subscribe(data=>{this.Books=data;});
+    this.service.getBooksPaginated(this.pageNum-1, this.pageSize, this.catNum)
+    .subscribe(data=>{this.pageNum=data.page.number+1
+                     this.pageSize=data.page.size;
+                     this.Books=data._embedded.books;
+                     this.totalElements=data.page.totalElements;
+    });
     
   }
   else{
-    this.service.getListService().subscribe(data=>{this.Books=data;});
+    this.service.getBooksPaginated(this.pageNum-1, this.pageSize).subscribe(data=>{
+      this.pageNum=data.page.number+1
+                     this.pageSize=data.page.size;
+                     this.Books=data._embedded.books;
+                     this.totalElements=data.page.totalElements;
+    });
   }
+
+if(this.catNum!=this.previousCat){
+  this.pageNum=1;
+  this.previousCat=this.catNum;
+}
+
 }
 
 private fromSearch():void{

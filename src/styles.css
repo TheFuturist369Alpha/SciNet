@@ -525,7 +525,7 @@ input.au-input.au-input-xl{
  */
 
 .product-box img {
-    width: 140px;
+    width: 130px;
 }
 
 .items select {
@@ -961,11 +961,11 @@ footer ul li{
         height:80px
     }
     a.logo img{
-        width:110px
+        width:30%
     }
 
     .detail-img{
-        width:30%;
+        width:20%;
     }
 
     .cart-area i{

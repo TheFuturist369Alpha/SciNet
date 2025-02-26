@@ -12,8 +12,6 @@ export class ServiceService {
 
   constructor(private httpClient:HttpClient) { }
 
-  public  getListService():Observable<Book[]>;
-  public getListService(catNum:number):Observable<Book[]>;
   
   
 
@@ -36,13 +34,50 @@ export class ServiceService {
    getBookService(id:number):Observable<Book>{
     return this.httpClient.get<Book>(`${this.baseUrl1}/bookapi/getbook?id=${id}`);
    }
+    
+
+
+   getBooksPaginated(pageNum:number, size:number, catId?:number):Observable<BooksPaginated>{
+
+
+    let url:string="";
+    if(catId==null || catId==undefined){
+        url=`${this.baseUrl1}/books?size=${size}&page=${pageNum}`;
+    }
+    
+    else{
+     url=`${this.baseUrl1}/books/search/byId?id=${catId}&size=${size}&page=${pageNum}`;
+    }
+
+    return this.httpClient.get<BooksPaginated>(url);
+
+   }
+
+   
+
+   }
+  
   
 
   
-}
+
 
 interface Response{
     _embedded:{
       books:Book[]
     }
+}
+
+
+interface BooksPaginated{
+      _embedded:{
+        books:Book[];
+      };
+
+      page:{
+        size:number;
+        totalElements:number;
+        totalPages:number;
+        number:number;
+      };
 }
