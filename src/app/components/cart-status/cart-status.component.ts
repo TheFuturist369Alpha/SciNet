@@ -1,0 +1,27 @@
+import { Component, NgModule, OnInit } from '@angular/core';
+import { CartService } from '../../Services/CartService/cart.service';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-cart-status',
+  imports: [CommonModule],
+  templateUrl: './cart-status.component.html',
+  styleUrl: './cart-status.component.css'
+})
+export class CartStatusComponent implements OnInit {
+
+  public totalPrice:number=0;
+  public totalQuantity:number=0
+    constructor(private service:CartService){
+  
+    }
+
+    ngOnInit(): void {
+      this.getCartDetails(); 
+    }
+
+    public getCartDetails():void{
+      this.service.totalPrice.subscribe(data=>{this.totalPrice=data});
+      this.service.totalQuant.subscribe(data=>{this.totalQuantity=data});
+    }
+}

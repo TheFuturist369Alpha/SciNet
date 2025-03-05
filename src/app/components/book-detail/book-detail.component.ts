@@ -23,7 +23,7 @@ export class BookDetailComponent implements OnInit {
     let num:number=0;
     if(this.router.snapshot.paramMap.has("id")){
       num=+this.router.snapshot.paramMap.get("id")!;
-      this.service.getBookService(num).subscribe(data=>{this.book=data;});
+      this.service.getBookService(num).subscribe(data=>{this.book=data; console.log(this.book.id)});
     }
   }
 

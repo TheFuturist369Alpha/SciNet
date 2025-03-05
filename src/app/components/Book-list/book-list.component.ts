@@ -5,6 +5,8 @@ import { CommonModule, NgFor } from '@angular/common';
 import { Subject } from '../../Entities/Subject/subject';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { Cart } from '../../Entities/Cart/cart';
+import { CartService } from '../../Services/CartService/cart.service';
 
 @Component({
   selector: 'book-list',
@@ -15,6 +17,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 export class BookListComponent implements OnInit {
 //public Books:Book[]=[new Book(2,"ksk", "ks", 1, "ks", true,new Date(),new Subject(2,"ks"))];
 public Books:Book[]=[];
+public selectedBooks:Book[]=[];
 public catNum:number=0;
 public useSearch:boolean=false;
 public pageNum:number=1;
@@ -22,7 +25,7 @@ public pageSize:number=8;
 public totalElements=0;
 private previousCat:number=0;
 
-constructor(private service:ServiceService, public route:ActivatedRoute){
+constructor(private service:ServiceService, public route:ActivatedRoute, private cartService:CartService){
 }
 
 
@@ -84,6 +87,21 @@ private fromSearch():void{
 
 
 
+}
+
+public updatePageSize(value: string):void{
+this.pageSize=+value;
+this.pageNum=1;
+this.loadData();
+}
+
+
+public addToCart(book:Book):void{
+
+  let cart:Cart=new Cart(book);
+  this.cartService.addToCart(cart);
+
+ console.log(`Added ${book.name} to cart`);
 }
 
 }

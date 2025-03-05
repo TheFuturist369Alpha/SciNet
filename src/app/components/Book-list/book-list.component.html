@@ -4,10 +4,10 @@
             <div class="row">
                 <div *ngFor="let book of Books" class="col-md-3">
                     <div class="product-box">
-                        <a routerLink="/book/{{book.id}}"><img src={{book.image_url}} alt="jalvis" class="img-responsive">
-                        <h1 style="color:darkslategray;">{{book.name}}</h1></a>
+                        <a routerLink="/book/{{book.id}}"><img src={{book.image_url}} alt="jalvis" class="img-responsive"></a>
+                        <h1 style="color:darkslategray;">{{book.name}}</h1>
                         <div class="price" >{{book.date_launched | date:'dd/MM/yyyy'}}</div>
-                        <a href="#" class="primary-btn">Add to list</a>
+                        <button (click)="addToCart(book)" class="primary-btn btn btn-sm">Add to list</button>
                     </div>
                 
                 </div>
@@ -30,6 +30,16 @@
                                                     (pageChange)="loadData()">
 
                                     </ngb-pagination>
+                                </div>
+
+                                <div class="col-md-3 mt-2" style="text-align:right;">
+                                    <span class="mr-2">Select page size</span>
+
+                                    <select #sizeValue (change)="updatePageSize(sizeValue.value)">
+                                        <option selected="true">2</option>
+                                        <option>4</option>
+                                        <option>6</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

@@ -6,6 +6,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { ServiceService } from './Services/BookService/service.service';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { SubjectService } from './Services/SubjectService/subject.service';
+import { CartService } from './Services/CartService/cart.service';
 
 
 
@@ -13,5 +14,5 @@ import { SubjectService } from './Services/SubjectService/subject.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), 
-    provideClientHydration(withEventReplay()), provideHttpClient(withFetch()), ServiceService, SubjectService]
+    provideClientHydration(withEventReplay()), provideHttpClient(withFetch()), ServiceService, SubjectService, CartService]
 };

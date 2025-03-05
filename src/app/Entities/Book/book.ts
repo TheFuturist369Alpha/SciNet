@@ -9,5 +9,5 @@ export class Book {
                     
                 }
 
-                public dateToString:string="";
+                
 }
