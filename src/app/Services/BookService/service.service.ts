@@ -11,11 +11,7 @@ export class ServiceService {
   
 
   constructor(private httpClient:HttpClient) { }
-
   
-  
-
-   
    getListService(catNum?:number):Observable<Book[]>{
     if(catNum!==null && catNum!==undefined){
     return this.httpClient.get<Book[]>(`${this.baseUrl1}/bookapi/getbooksbysubjectid?id=${catNum}`);

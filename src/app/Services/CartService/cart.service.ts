@@ -15,15 +15,9 @@ public totalPrice:Subject<number>=new Subject<number>();
 
   public addToCart(book:Cart){
     let exists:boolean=false;
-    let bk!:Cart;
-    for(let b of this.books){
-        if(b.id===book.id){
-          exists=true;
-          bk=b;
-          break;
-        }    }
+    let bk:Cart=this.books.find(temp=>temp.id===book.id)!;
 
-        if(exists){
+        if(bk!=null && bk!=undefined){
           bk.quantity++;
         }
         else{
