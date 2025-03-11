@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <img src={{book.image_url}} class="detail-img">
         <h3>{{book.name}}</h3>
-        <a href="#" class="primary-btn">Add to cart</a>
+        <button (click)="addToCart(book)" class="primary-btn btn btn-sm">Add to cart</button>
         <hr>
 
         <h4>Description</h4>
