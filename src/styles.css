@@ -12,6 +12,10 @@
     box-sizing:border-box
 }
 
+.light-font{
+    color:rgb(225, 252, 252);
+}
+
 body{
     font-family:Poppins,sans-serif;
     font-weight:400;
@@ -111,7 +115,7 @@ a,a:hover{
 }
 
 .page-container{
-    background:#e5e5e5;
+    background:#080000af;
     padding-left:200px
 }
 

@@ -7,6 +7,20 @@
                     <th width="50%">Book detail</th>
                     <th width="30%"></th>
                 </thead>
+                <tbody *ngFor="let i of cartItems">
+                    <tr>
+                        <td><img src={{i.image_url}}></td>
+                        <td>{{i.name}}
+                        <div class="mb-5"></div>
+                        {{i.price | currency:'USD'}}
+                    </td>
+                    <td>
+                        Quantity: {{i.quantity}}
+                        <div class="mb-3"></div>
+                        Sub-total: {{i.quantity*i.price | currency:'USD'}}
+                    </td>
+                    </tr>
+                </tbody>
             </table>
         </div>    </div>
 </div>

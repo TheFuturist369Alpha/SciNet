@@ -5,9 +5,9 @@
                 <div *ngFor="let book of Books" class="col-md-3">
                     <div class="product-box">
                         <a routerLink="/book/{{book.id}}"><img src={{book.image_url}} alt="jalvis" class="img-responsive"></a>
-                        <h1 style="color:darkslategray;">{{book.name}}</h1>
+                        <h1 class="light-font">{{book.name}}</h1>
                         <div class="price" >{{book.date_launched | date:'dd/MM/yyyy'}}</div>
-                        <button (click)="addToCart(book)" class="primary-btn btn btn-sm">Add to list</button>
+                        <button (click)="addToCart(book)" class="primary-btn btn btn-sm light-font">Add to cart</button>
                     </div>
                 
                 </div>
