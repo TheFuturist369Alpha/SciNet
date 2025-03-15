@@ -19,7 +19,11 @@
         <div class="container-fluid">
           <div class="header-wrap">
             <app-search></app-search>
-            <app-cart-status></app-cart-status>
+
+            <ul class="horizont-list">
+           <li><app-user-profile></app-user-profile></li> 
+            <li><app-cart-status></app-cart-status></li>
+          </ul>
           </div>
           <div class="account-wrap"></div>
         </div>
@@ -31,17 +35,18 @@
     <!--<book-list></book-list>-->
     <router-outlet></router-outlet>
     
+    <footer>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Help</a></li>
+      </ul>
+    </footer>
   </div>
 
   <!-- END PAGE CONTAINER-->
 
 
-	<footer>
-		<ul>
-			<li><a href="#">About Us</a></li>
-			<li><a href="#">Contact Us</a></li>
-			<li><a href="#">Help</a></li>
-		</ul>
-	</footer>
+	
 
 </div>

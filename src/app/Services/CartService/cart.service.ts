@@ -29,7 +29,7 @@ public totalPrice:Subject<number>=new Subject<number>();
     
   }
 
-  private computeTotal():void{
+  public computeTotal():void{
     let totalQuantity=0;
     let totalPrice=0;
     for(let b of this.books){

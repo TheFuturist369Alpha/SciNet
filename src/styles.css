@@ -110,8 +110,8 @@ a,a:hover{
 
 .page-wrapper{
     overflow:hidden;
-    background:#19184e;
-    padding-bottom:8vh
+    background:#0b393b;
+    padding: bottom 1px;
 }
 
 .page-container{
@@ -129,7 +129,7 @@ aside.menu-sidebar.d-none.d-lg-block.clr{
     z-index:99999999;
     height:75px;
     box-shadow:-2px 0 4px #0000003b
-    background-colo
+    
 }
 
 /* 
@@ -288,11 +288,11 @@ input.au-input.au-input-xl{
     right:0;
     min-width:95px;
     color:#fff;
-    border:1px solid #205b8d;
+    border:1px solid #0b393b;
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
     border-radius:43px;
-    background:#205b8d
+    background:#0b393b
 }
 
 .au-btn-submit:hover{
@@ -324,9 +324,11 @@ input.au-input.au-input-xl{
     left:0;
     top:0;
     bottom:0;
-    background:#fff;
+    background:#072224;
     overflow-y:auto
 }
+
+
 
 .menu-sidebar .logo{
     background:#fff;
@@ -1043,4 +1045,55 @@ footer ul li{
         border:0;
         padding:8px 0
     }
+
+   
+}
+.pagination-des .page-item.active .page-link {
+    background-color: #000000f6; /* Background for active page */
+    color: white; /* Text color */
+    border-color: white; /* Border color */
+  }
+  
+  .pagination-des .page-link {
+    color: white; /* Normal page text */
+    background-color: #000000f6; /* Normal background */
+  }
+  
+  .pagination-des .page-link:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Hover effect */
+  }
+  
+  .pagination-des .page-item.disabled .page-link {
+    color: gray; /* Disabled page */
+  }
+  
+.sup{
+    background: white;
+    color:black;
+    height: 20px;
+    width:20px;
+    border-radius: 20px;
+    display: inline-block;
+    text-align: center;
+  line-height: 18px; /* Align text vertically */
+  display: inline-block;
+  position: relative;
+   /* Adjust horizontal alignment */
+
+}
+
+.btm{
+    position:absolute;
+    bottom:0;
+}
+
+.horizont-list{
+    list-style-type:none;
+    padding:0;
+    margin:0;
+    display:flex;
+}
+
+.horizont-list li{
+    margin-right: 10px;
 }

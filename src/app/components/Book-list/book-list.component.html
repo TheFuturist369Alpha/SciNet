@@ -6,8 +6,8 @@
                     <div class="product-box">
                         <a routerLink="/book/{{book.id}}"><img src={{book.image_url}} alt="jalvis" class="img-responsive"></a>
                         <h1 class="light-font">{{book.name}}</h1>
-                        <div class="price" >{{book.date_launched | date:'dd/MM/yyyy'}}</div>
-                        <button (click)="addToCart(book)" class="primary-btn btn btn-sm light-font">Add to cart</button>
+                        <div class="light-font"  >{{book.date_launched | date:'dd/MM/yyyy'}}</div>
+                        <button (click)="addToCart(book)" class="primary-btn btn "><div class="light-font"> Add to cart</div></button>
                     </div>
                 
                 </div>
@@ -23,12 +23,18 @@
 
                         <div class="col-md-6">
                             <div class="row">
-                                <div class="col-md-9" style="padding-left:30%;">
+                               <div> <div class="col-md-9" style="padding-left:30%;">
                                     <ngb-pagination [(page)]="this.pageNum"
                                                     [pageSize]="this.pageSize"
                                                     [collectionSize]="this.totalElements"
-                                                    (pageChange)="loadData()">
-
+                                                    [boundaryLinks]="true"
+                                                    [maxSize]="1"
+                                                    [ellipses]="true"
+                                                    [rotate]="false"
+                                                    (pageChange)="loadData()" class="pagination-des">
+                                                    
+                                        <ng-template ngbPaginationPrevious>prev</ng-template>
+                                       <ng-template ngbPaginationNext>next</ng-template>
                                     </ngb-pagination>
                                 </div>
 
@@ -41,6 +47,7 @@
                                         <option>6</option>
                                     </select>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>

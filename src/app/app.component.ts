@@ -4,10 +4,11 @@ import { BookListComponent } from './components/Book-list/book-list.component';
 import { MenuListComponent } from "./components/menu-list/menu-list.component";
 import { SearchComponent } from "./components/search/search.component";
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
+import { UserProfileComponent } from "./components/user-profile/user-profile.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, RouterOutlet,  MenuListComponent, SearchComponent,CartStatusComponent],
+  imports: [RouterModule, RouterOutlet, MenuListComponent, SearchComponent, CartStatusComponent, UserProfileComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -7,20 +7,31 @@
                     <th width="50%">Book detail</th>
                     <th width="30%"></th>
                 </thead>
-                <tbody *ngFor="let i of cartItems">
-                    <tr>
+                
+                    <tr *ngFor="let i of cartItems">
                         <td><img src={{i.image_url}}></td>
-                        <td>{{i.name}}
-                        <div class="mb-5"></div>
-                        {{i.price | currency:'USD'}}
+                        <td><p>{{i.name}}</p>
+                       <p>{{i.price | currency:'USD'}}</p> 
                     </td>
                     <td>
-                        Quantity: {{i.quantity}}
-                        <div class="mb-3"></div>
+                        Quantity: {{i.quantity}}<div class="mb-2"></div>
                         Sub-total: {{i.quantity*i.price | currency:'USD'}}
                     </td>
                     </tr>
-                </tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            Total Quantity: {{itemQuantity}}
+                            <div class="mb-2"></div>
+                            
+                             Shipping: free
+                             <div class="mb-2"></div>
+                            
+                            Total price: {{totalPrice | currency:'USD'}}
+                        </td>
+                    </tr>
+            
             </table>
         </div>    </div>
 </div>

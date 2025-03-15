@@ -25,13 +25,14 @@ ngOnInit(): void {
 }
 
 loadTotal():void{
-this.service.totalPrice.subscribe(data=>{
-  this.totalPrice=data;
-});
+this.service.totalPrice.subscribe(data=>{this.totalPrice=data});
 
-this.itemQuantity=this.cartItems.length;
+this.service.totalQuant.subscribe(data=>{this.itemQuantity=data});
 
 this.cartItems=this.service.books;
+
+this.service.computeTotal();
+
 }
 
 }
