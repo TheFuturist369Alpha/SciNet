@@ -1,10 +1,10 @@
 <div class="cart-area d-n">
-   <div *ngIf="totalQuantity>0; else temp"> <a routerLink="/cart-details">
+   <div *ngIf="totalQuantity>0; else temp"> <button (click)="redirectToCartDetails()">
       <!--<div class="total">{{totalPrice | currency:'USD'}} <span>{{totalQuantity}}</span> </div>--> <i class="fa fa-shopping-cart"
       aria-hidden="true"></i> 
       <sup><span class="sup">{{totalQuantity}}</span></sup>
-    </a></div>
+   </button></div>
 
-    <ng-template #temp><!--<div class="total">{{totalPrice | currency:'USD'}} <span>{{totalQuantity}}</span> </div>--> <i class="fa fa-shopping-cart"
-      aria-hidden="true"></i> </ng-template>
+    <ng-template #temp><!--<div class="total">{{totalPrice | currency:'USD'}} <span>{{totalQuantity}}</span> </div>--> 
+      <button (click)="redirectToCartDetails()"> <i class="fa fa-shopping-cart" aria-hidden="true"></i> </button></ng-template>
   </div>

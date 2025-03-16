@@ -1,6 +1,7 @@
 <div class="main-content">
     <div class="section-content section-content-p30">
         <div class="container-fluid">
+            <div *ngIf="cartItems.length > 0; else empty">
             <table class="table table-bordered">
                 <thead>
                     <th width="20%">Book Image</th>
@@ -14,13 +15,48 @@
                        <p>{{i.price | currency:'USD'}}</p> 
                     </td>
                     <td>
-                        Quantity: {{i.quantity}}<div class="mb-2"></div>
-                        Sub-total: {{i.quantity*i.price | currency:'USD'}}
+                        <div class="row">
+                            Quantity:
+                            <div class="col"></div>
+                            <div class="col"></div>
+                            <div class="col"><button (click)="deleteItem(i)"><i class="fas fa-trash" style="color: red;"></i></button></div>
+                             
+                        </div>
+                        
+                        <div class="row no-gutters">
+                            <div class="col">
+                                <button (click)="inc(i)" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-plus">
+                                    </i>
+                                </button>
+                            </div>
+                            <div class="col">
+                                {{i.quantity}}
+                            </div>
+
+                            <div class="col">
+                                <button (click)="dec(i)" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-minus">
+                                    </i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-1"></div>
+                        <div class="row no-gutters">
+                            <div class="col">
+                        Sub-total: {{i.quantity*i.price | currency:'USD'}}</div>
+                        
+                        <div class="col"></div>
+                        <div class="col">
+                            <button [ngClass]="{'disabled':i.disableBtn}" (click)="updateTotal(i)" class="btn btn-primary btn-sm"> Update</button>
+                        </div>
+                        </div>
+
                     </td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        
+                        <td colspan="2"></td>
                         <td>
                             Total Quantity: {{itemQuantity}}
                             <div class="mb-2"></div>
@@ -33,6 +69,13 @@
                     </tr>
             
             </table>
+        </div>
+
+        <ng-template #empty>
+            <div class="alert alert-warning col-md-12" role="alert">
+                Cart is empty.
+            </div>
+        </ng-template>
         </div>    </div>
 </div>
 
