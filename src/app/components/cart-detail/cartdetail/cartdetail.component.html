@@ -63,8 +63,12 @@
                             
                              Shipping: free
                              <div class="mb-2"></div>
+                           <div class="row">
+                            <div class="col">Total price: {{totalPrice | currency:'USD'}}</div>
+                            <div class="col"><button routerLink="/checkout" class="btn btn-primary">Check out</button></div>
                             
-                            Total price: {{totalPrice | currency:'USD'}}
+                        </div> 
+                            
                         </td>
                     </tr>
             

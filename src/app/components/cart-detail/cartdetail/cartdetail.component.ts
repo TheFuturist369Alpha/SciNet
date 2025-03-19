@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Cart } from '../../../Entities/Cart/cart';
 import { CartService } from '../../../Services/CartService/cart.service';
 import { CommonModule, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-cartdetail',
-  imports: [NgFor, CommonModule],
+  imports: [NgFor, CommonModule, RouterModule],
   templateUrl: './cartdetail.component.html',
   styleUrl: './cartdetail.component.css'
 })
