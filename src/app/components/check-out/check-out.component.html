@@ -16,9 +16,192 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Last Name</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="lastName" type="text">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Email</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="email" type="text">
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <div formGroupName="shippingAddress" class="form-area">
+                    <h3>Address</h3>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Country</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="country" >
+                                    <option>to do</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>City</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="city" type="text">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Street</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="street" type="text">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Zip Code</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="zipCode" type="text">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div formGroupName="creditCard" class="form-area">
+                    <h3>Card details</h3>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Card Type</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="cardType">
+                                    <option>to do</option>
+                                </select>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Card Holder</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="cardHolder" type="text">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Card Number</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="cardNumber" type="text">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Security Code</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="securityCode" type="text">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Expiration month:</label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-space">
+                                <select formControlName="expiryMonth" placeholder="select date" >
+                                    <option *ngFor="let month of months">
+                                        {{month}}
+                                    </option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Expiry Year</label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-space">
+                                <select formControlName="expiryYear" placeholder="select date" >
+                                    <option *ngFor="let year of years">
+                                        {{year}}
+                                    </option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="form-area">
+                    <thead>
+                        <tr>
+                            <th width="20%" style="justify-content: center;">Item</th>
+                            <th width="20%" style="justify-content: center;">Price </th>
+                            <th width="50%" style="justify-content: center;">Quantity</th>
+                            <th width="40%" style="justify-content: center;">Total price</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of books">
+                        <tr>
+                            <td><img src="{{item.image_url}}" class="img-responsive">
+                            <br><b>{{item.name}}</b>
+                            <br>
+                            </td>
+                            <td ><div style="justify-content: center;">{{item.price | currency:'USD'}}</div></td>
+                            <td><div style="justify-content: center;">{{item.quantity}}</div></td>
+                            <td><div style="justify-content: center;">{{item.price*item.quantity}}</div></td>
+                        </tr>
+                        <div style="padding-bottom: 5px;"></div>
+                    </tbody>
+                </table>
+
                 <div class="text-center">
-                    <button type="submit" class="ntn btn-info">Purchase</button>
+                    <button type="submit" class="btn btn-info" (click)="onSubmit()">Purchase</button>
                 </div>
             </form>
 </div></div></div>
