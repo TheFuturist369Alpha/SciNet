@@ -18,8 +18,9 @@ public months:number[]=[];
     return of(this.years);
   }
 
-  public getCreditCardMonths(){
-    let startMonth:number=(new Date().getMonth()+1);
+  public getCreditCardMonths(strt:number){
+    let startMonth:number=strt;
+    this.months=[];
     for(let i=startMonth; i<=12; i+=1){
       this.months.push(i);
     }

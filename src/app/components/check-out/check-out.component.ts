@@ -49,7 +49,7 @@ ngOnInit(): void {
     })
   });
 
-  this.populateMonthsAndYears();
+  this.populateMonthsAndYears(new Date().getMonth()+1);
 
   this.reviewOrder();
 }
@@ -69,8 +69,8 @@ this.service.totalQuant.subscribe(data=>{
 this.books=this.service.books;
 }
 
-populateMonthsAndYears(){
-  this.cService.getCreditCardMonths().subscribe(data=>{
+populateMonthsAndYears(strt:number){
+  this.cService.getCreditCardMonths(strt).subscribe(data=>{
     this.months=data;
     console.log(`Months:${JSON.stringify(data)}`);
   });
@@ -79,6 +79,19 @@ populateMonthsAndYears(){
     this.years=data;
     console.log(`Years:${JSON.stringify(data)}`);
   });
+
+}
+
+handleMonthsYears(){
+  let currentYear:number=new Date().getFullYear();
+  let selectedYear:number=Number(this.formGroup.get("creditCard")?.value.expiryYear);
+  if(currentYear===selectedYear){
+    
+    this.populateMonthsAndYears(new Date().getMonth()+1);
+  }
+  else{
+    this.populateMonthsAndYears(1);
+  }
 
 }
 

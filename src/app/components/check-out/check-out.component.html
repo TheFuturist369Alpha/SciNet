@@ -148,27 +148,30 @@
                     </div>
 
                     <div class="row">
+                    
                         <div class="col-md-2">
-                            <label>Expiration month:</label>
+                            <label>Expiry Year</label>
                         </div>
                         <div class="col-md-3">
                             <div class="input-space">
-                                <select formControlName="expiryMonth" placeholder="select date" >
-                                    <option *ngFor="let month of months">
-                                        {{month}}
+                                <select formControlName="expiryYear" (change)="handleMonthsYears()" >
+                                    
+                                    <option *ngFor="let year of years" [value]="year">
+                                        {{year}}
                                     </option>
                                 </select>
 
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <label>Expiry Year</label>
+                            <label>Expiry month:</label>
                         </div>
                         <div class="col-md-3">
                             <div class="input-space">
-                                <select formControlName="expiryYear" placeholder="select date" >
-                                    <option *ngFor="let year of years">
-                                        {{year}}
+                                <select formControlName="expiryMonth" >
+                                   
+                                    <option *ngFor="let month of months">
+                                        {{month}}
                                     </option>
                                 </select>
 
