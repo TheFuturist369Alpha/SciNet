@@ -8,6 +8,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { SubjectService } from './Services/SubjectService/subject.service';
 import { CartService } from './Services/CartService/cart.service';
 import { CheckOutService } from './Services/CheckOutService/check-out.service';
+import { CountryStateService } from './Services/CountryStateService/country-state.service';
 
 
 
@@ -15,5 +16,5 @@ import { CheckOutService } from './Services/CheckOutService/check-out.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), 
-    provideClientHydration(withEventReplay()), provideHttpClient(withFetch()), ServiceService, SubjectService, CartService, CheckOutService]
+    provideClientHydration(withEventReplay()), provideHttpClient(withFetch()), ServiceService, SubjectService, CartService, CheckOutService,CountryStateService]
 };

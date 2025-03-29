@@ -50,8 +50,8 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="country" >
-                                    <option>to do</option>
+                                <select formControlName="country" (change)="setState()" >
+                                    <option *ngFor="let country of countries" [value]="country.code">{{country.name}}</option>
 
                                 </select>
 
@@ -65,7 +65,11 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <input formControlName="city" type="text">
+                                <select formControlName="city" >
+                                    <option *ngFor="let state of states">
+                                        {{state.name}}
+                                    </option>
+                                </select>
 
                             </div>
                         </div>

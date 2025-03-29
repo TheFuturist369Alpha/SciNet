@@ -6,6 +6,9 @@ import { Cart } from '../../Entities/Cart/cart';
 import { CommonModule, NgFor } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CheckOutService } from '../../Services/CheckOutService/check-out.service';
+import { Country } from '../../Entities/Country/country';
+import { CountryStateService } from '../../Services/CountryStateService/country-state.service';
+import { State } from '../../Entities/State/state';
 
 @Component({
   selector: 'app-check-out',
@@ -19,8 +22,12 @@ export class CheckOutComponent implements OnInit {
   public books:Cart[]=[];
   public years:number[]=[];
   public months:number[]=[];
+  public countries:Country[]=[];
+  public states:State[]=[];
+  
 formGroup!:FormGroup;
-constructor(private builder:FormBuilder, private service:CartService, private cService:CheckOutService){}
+constructor(private builder:FormBuilder, private service:CartService, 
+  private cService:CheckOutService, private csService:CountryStateService){}
 
 ngOnInit(): void {
   this.formGroup=this.builder.group({
@@ -48,9 +55,9 @@ ngOnInit(): void {
       expiryYear:['']
     })
   });
-
+  
+  this.getCountryState();
   this.populateMonthsAndYears(new Date().getMonth()+1);
-
   this.reviewOrder();
 }
 
@@ -92,6 +99,18 @@ handleMonthsYears(){
   else{
     this.populateMonthsAndYears(1);
   }
+
+}
+
+getCountryState():void{
+this.csService.getCountries().subscribe(data=>{
+  this.countries=data;
+})
+}
+
+setState():void{
+let code:string= this.formGroup.get("shippingAddress")?.value.country;
+this.csService.getStates(code).subscribe(data=>{this.states=data});
 
 }
 
