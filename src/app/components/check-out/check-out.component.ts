@@ -1,5 +1,5 @@
 import { Component, NgModule, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CartService } from '../../Services/CartService/cart.service';
 import { Book } from '../../Entities/Book/book';
 import { Cart } from '../../Entities/Cart/cart';
@@ -29,17 +29,22 @@ formGroup!:FormGroup;
 constructor(private builder:FormBuilder, private service:CartService, 
   private cService:CheckOutService, private csService:CountryStateService){}
 
+  get firstName(){ return this.formGroup.get("customer.firstName"); }
+  get lastName(){ return this.formGroup.get("customer.lastName"); }
+  get email(){ return this.formGroup.get("customer")?.value.email; }
+
 ngOnInit(): void {
   this.formGroup=this.builder.group({
     customer:this.builder.group({
-      firstName:[''],
-      lastName:[''],
-      email:['']
+      firstName:new FormControl("", [Validators.required, Validators.minLength(2)]),
+      lastName:new FormControl("", [Validators.required, Validators.minLength(2)]),
+      email:new FormControl("", [Validators.required,
+         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2-4}$")])
     }),
 
     shippingAddress:this.builder.group({
       street:[''],
-      city:[''],
+      state:[''],
       country:[''],
       zipCode:['']
 
