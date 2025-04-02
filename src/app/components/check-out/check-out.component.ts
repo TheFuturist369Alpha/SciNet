@@ -9,6 +9,7 @@ import { CheckOutService } from '../../Services/CheckOutService/check-out.servic
 import { Country } from '../../Entities/Country/country';
 import { CountryStateService } from '../../Services/CountryStateService/country-state.service';
 import { State } from '../../Entities/State/state';
+import { CustomValidotors } from '../../Utils/custom-validators';
 
 @Component({
   selector: 'app-check-out',
@@ -31,15 +32,15 @@ constructor(private builder:FormBuilder, private service:CartService,
 
   get firstName(){ return this.formGroup.get("customer.firstName"); }
   get lastName(){ return this.formGroup.get("customer.lastName"); }
-  get email(){ return this.formGroup.get("customer")?.value.email; }
+  get email(){ return this.formGroup.get("customer.email"); }
 
 ngOnInit(): void {
   this.formGroup=this.builder.group({
     customer:this.builder.group({
-      firstName:new FormControl("", [Validators.required, Validators.minLength(2)]),
-      lastName:new FormControl("", [Validators.required, Validators.minLength(2)]),
+      firstName:new FormControl("", [Validators.required, Validators.minLength(2), CustomValidotors.checkOnlyWhitespace]),
+      lastName:new FormControl("", [Validators.required, Validators.minLength(2), CustomValidotors.checkOnlyWhitespace]),
       email:new FormControl("", [Validators.required,
-         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2-4}$")])
+         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2-4}$"),CustomValidotors.checkOnlyWhitespace])
     }),
 
     shippingAddress:this.builder.group({
@@ -118,5 +119,7 @@ let code:string= this.formGroup.get("shippingAddress")?.value.country;
 this.csService.getStates(code).subscribe(data=>{this.states=data});
 
 }
+
+
 
 }

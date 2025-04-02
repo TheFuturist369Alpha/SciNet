@@ -12,9 +12,17 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="firstName" type="text">
-                                <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)"  class="alert">
-                                    <div *ngIf="firstName?.errors">
+                                <div *ngIf="firstName?.invalid && (firstName?.touched)"  class="alert alert-warning">
+                                    <div *ngIf="firstName?.errors!['required']">
+                                        First name required
+                                    </div>
 
+                                    <div *ngIf="firstName?.errors!['minlength']">
+                                        Minimum length is 2
+                                    </div>
+
+                                    <div *ngIf="firstName?.errors!['OnlyWhitespace']">
+                                        Enter visible characters please.
                                     </div>
                                 </div>
 
@@ -29,6 +37,19 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="lastName" type="text">
+                                <div *ngIf="lastName?.invalid && ( lastName?.touched)"  class="alert alert-warning">
+                                    <div *ngIf="lastName?.errors!['required']">
+                                        Last name required
+                                    </div>
+
+                                    <div *ngIf="lastName?.errors!['minlength']">
+                                        Minimum length is 2
+                                    </div>
+
+                                    <div *ngIf="lastName?.errors!['OnlyWhitespace']">
+                                        Enter visible characters please.
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -41,6 +62,19 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="email" type="text">
+                                <div *ngIf="email?.invalid && ( email?.touched)"  class="alert alert-warning">
+                                    <div *ngIf="email?.errors!['required']">
+                                        Email required.
+                                    </div>
+
+                                    <div *ngIf="email?.errors!['pattern']">
+                                        Email is not in the right format.
+                                    </div>
+
+                                    <div *ngIf="email?.errors!['OnlyWhitespace']">
+                                        Enter visible characters please.
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
