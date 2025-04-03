@@ -32,7 +32,17 @@ constructor(private builder:FormBuilder, private service:CartService,
 
   get firstName(){ return this.formGroup.get("customer.firstName"); }
   get lastName(){ return this.formGroup.get("customer.lastName"); }
-  get email(){ return this.formGroup.get("customer.email"); }
+  get email(){ return this.formGroup.get("shippingAddress.email"); }
+  get street(){ return this.formGroup.get("shippingAddress.street"); }
+  get state(){ return this.formGroup.get("shippingAddress.state"); }
+  get country(){ return this.formGroup.get("shippingAddress.country"); }
+  get zipCode(){ return this.formGroup.get("shippingAddress.zipCode"); }
+  get cardType(){ return this.formGroup.get("creditCard.cardType"); }
+  get cardHolder(){ return this.formGroup.get("creditCard.cardHolder"); }
+  get cardNumber(){ return this.formGroup.get("creditCard.cardNumber"); }
+  get securityCode(){ return this.formGroup.get("creditCard.securityCode"); }
+  get expiryMonth(){ return this.formGroup.get("creditCard.expiryMonth"); }
+  get expiryYear(){ return this.formGroup.get("creditCard.expiryYear"); }
 
 ngOnInit(): void {
   this.formGroup=this.builder.group({
@@ -40,25 +50,25 @@ ngOnInit(): void {
       firstName:new FormControl("", [Validators.required, Validators.minLength(2), CustomValidotors.checkOnlyWhitespace]),
       lastName:new FormControl("", [Validators.required, Validators.minLength(2), CustomValidotors.checkOnlyWhitespace]),
       email:new FormControl("", [Validators.required,
-         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2-4}$"),CustomValidotors.checkOnlyWhitespace])
+         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"),CustomValidotors.checkOnlyWhitespace])
     }),
 
     shippingAddress:this.builder.group({
-      street:[''],
-      state:[''],
-      country:[''],
-      zipCode:['']
+      street:new FormControl("", [Validators.required, Validators.minLength(3), CustomValidotors.checkOnlyWhitespace]),
+      state:new FormControl("", [Validators.required]),
+      country:new FormControl("", [Validators.required]),
+      zipCode:new FormControl("", [Validators.required, Validators.minLength(3), CustomValidotors.checkOnlyWhitespace, Validators.maxLength(3)])
 
       
     }),
 
     creditCard:this.builder.group({
-      cardType:[''],
-      cardHolder:[''],
-      cardNumber:[''],
-      securityCode:[''],
-      expiryMonth:[''],
-      expiryYear:['']
+      cardType:new FormControl("", [Validators.required]),
+      cardHolder:new FormControl("", [Validators.required, Validators.minLength(3), CustomValidotors.checkOnlyWhitespace]),
+      cardNumber:new FormControl("", [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern("[0-9]"),CustomValidotors.checkOnlyWhitespace]),
+      securityCode:new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(3), Validators.pattern("[0-9]"), CustomValidotors.checkOnlyWhitespace]),
+      expiryMonth:new FormControl("", [Validators.required]),
+      expiryYear:new FormControl("", [Validators.required])
     })
   });
   

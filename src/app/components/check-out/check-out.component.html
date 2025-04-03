@@ -12,8 +12,8 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="firstName" type="text">
-                                <div *ngIf="firstName?.invalid && (firstName?.touched)"  class="alert alert-warning">
-                                    <div *ngIf="firstName?.errors!['required']">
+                                <div *ngIf="firstName?.invalid && firstName?.touched && firstName?.value.length!=0"  class="alert alert-warning">
+                                    <div *ngIf="firstName?.errors!['required'] || firstName?.errors!['OnlyWhitespace']">
                                         First name required
                                     </div>
 
@@ -21,9 +21,7 @@
                                         Minimum length is 2
                                     </div>
 
-                                    <div *ngIf="firstName?.errors!['OnlyWhitespace']">
-                                        Enter visible characters please.
-                                    </div>
+                                    
                                 </div>
 
                             </div>
@@ -37,8 +35,8 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="lastName" type="text">
-                                <div *ngIf="lastName?.invalid && ( lastName?.touched)"  class="alert alert-warning">
-                                    <div *ngIf="lastName?.errors!['required']">
+                                <div *ngIf="lastName?.invalid && ( lastName?.touched) && lastName?.value.length!=0"  class="alert alert-warning">
+                                    <div *ngIf="lastName?.errors!['required'] || lastName?.errors!['OnlyWhitespace']">
                                         Last name required
                                     </div>
 
@@ -46,9 +44,7 @@
                                         Minimum length is 2
                                     </div>
 
-                                    <div *ngIf="lastName?.errors!['OnlyWhitespace']">
-                                        Enter visible characters please.
-                                    </div>
+                                    
                                 </div>
 
                             </div>
@@ -62,8 +58,8 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="email" type="text">
-                                <div *ngIf="email?.invalid && ( email?.touched)"  class="alert alert-warning">
-                                    <div *ngIf="email?.errors!['required']">
+                                <div *ngIf="email?.invalid && ( email?.touched) && email?.value.length!=0"  class="alert alert-warning">
+                                    <div *ngIf="email?.errors!['required'] || email?.errors!['OnlyWhitespace']">
                                         Email required.
                                     </div>
 
@@ -71,9 +67,7 @@
                                         Email is not in the right format.
                                     </div>
 
-                                    <div *ngIf="email?.errors!['OnlyWhitespace']">
-                                        Enter visible characters please.
-                                    </div>
+                                    
                                 </div>
 
                             </div>
@@ -91,8 +85,15 @@
                             <div class="input-space">
                                 <select formControlName="country" (change)="setState()" >
                                     <option *ngFor="let country of countries" [value]="country.code">{{country.name}}</option>
-
+                                    
                                 </select>
+                                <div *ngIf="country?.invalid && ( country?.touched) && country?.value.length!=0"  class="alert alert-warning">
+                                    <div *ngIf="country?.errors!['required']">
+                                        Country required.
+                                    </div>
+
+                                    
+                                </div>
 
                             </div>
                         </div>
@@ -110,6 +111,14 @@
                                     </option>
                                 </select>
 
+                                <div *ngIf="state?.invalid && ( state?.touched) && state?.value.length!=0"  class="alert alert-warning">
+                                    <div *ngIf="state?.errors!['required']">
+                                        State required.
+                                    </div>
+
+                                    
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -121,6 +130,17 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="street" type="text">
+                                <div *ngIf="street?.invalid && ( street?.touched) && street?.value.length!=0"  class="alert alert-warning">
+                                    <div *ngIf="street?.errors!['required'] || street?.errors!['OnlyWhitespace']">
+                                        Street required
+                                    </div>
+
+                                    <div *ngIf="street?.errors!['minlength']">
+                                        Minimum length is 2
+                                    </div>
+
+                                    
+                                </div>
 
                             </div>
                         </div>
@@ -132,11 +152,23 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="zipCode" type="text">
+                                <div *ngIf="(zipCode?.errors!=null) && ( zipCode?.touched) && zipCode?.value.length!=0"  class="alert alert-warning">
+                                <div *ngIf="zipCode?.errors!['required'] || zipCode?.errors!['OnlyWhitespace']">
+                                    Zip code required
+                                </div>
+
+                                <div *ngIf="zipCode?.errors!['minlength'] || zipCode?.errors!['maxlength']">
+                                    Enter zip code of length: 3
+                                </div>
+                                </div>
+
+                                
+                            </div>
 
                             </div>
                         </div>
                     </div>
-                </div>
+                
 
                 <div formGroupName="creditCard" class="form-area">
                     <h3>Card details</h3>
@@ -162,6 +194,15 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="cardHolder" type="text">
+                                <div *ngIf="(cardHolder?.errors!=null) && ( cardHolder?.touched) && cardHolder?.value.length!=0"  class="alert alert-warning">
+                                    <div *ngIf="cardHolder?.errors!['required'] || cardHolder?.errors!['OnlyWhitespace']">
+                                        Card holder required
+                                    </div>
+    
+                                    <div *ngIf="cardHolder?.errors!['minlength']">
+                                        Minimum length: 3
+                                    </div>
+                                    </div>
 
                             </div>
                         </div>
@@ -174,6 +215,19 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="cardNumber" type="text">
+                                <div *ngIf="(cardNumber?.errors!=null) && ( cardNumber?.touched) && cardNumber?.value.length!=0"  class="alert alert-warning">
+                                    <div *ngIf="cardNumber?.errors!['required'] || cardNumber?.errors!['OnlyWhitespace']">
+                                        Card Number required
+                                    </div>
+    
+                                    <div *ngIf="cardHolder?.errors!['minlength'] || cardNumber?.errors!['maxlength']  ">
+                                        card number length: 16
+                                    </div>
+
+                                    <div *ngIf="cardHolder?.errors!['pattern'] ">
+                                        Only numbers please
+                                    </div>
+                                    </div>
 
                             </div>
                         </div>
@@ -185,6 +239,19 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="securityCode" type="text">
+                                <div *ngIf="(securityCode?.errors!=null) && ( securityCode?.touched) && securityCode?.value.length!=0"  class="alert alert-warning">
+                                    <div *ngIf="securityCode?.errors!['required'] || securityCode?.errors!['OnlyWhitespace']">
+                                        Security code required
+                                    </div>
+    
+                                    <div *ngIf="securityCode?.errors!['minlength'] || securityCode?.errors!['maxlength']  ">
+                                        Security code length: 3
+                                    </div>
+
+                                    <div *ngIf="securityCode?.errors!['pattern'] ">
+                                        Only numbers please
+                                    </div>
+                                    </div>
 
                             </div>
                         </div>
