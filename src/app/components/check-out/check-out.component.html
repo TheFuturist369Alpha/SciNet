@@ -12,7 +12,7 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="firstName" type="text">
-                                <div *ngIf="firstName?.invalid && firstName?.touched && firstName?.value.length!=0"  class="alert alert-warning">
+                                <div *ngIf="(firstName?.invalid && firstName?.touched) || (country?.touched && firstName?.value.length!=0 && (firstName?.invalid))"  class="alert alert-warning">
                                     <div *ngIf="firstName?.errors!['required'] || firstName?.errors!['OnlyWhitespace']">
                                         First name required
                                     </div>
@@ -35,7 +35,7 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="lastName" type="text">
-                                <div *ngIf="lastName?.invalid && ( lastName?.touched) && lastName?.value.length!=0"  class="alert alert-warning">
+                                <div *ngIf="(lastName?.invalid && lastName?.touched) || (lastName?.touched && lastName?.value.length!=0 && (lastName?.invalid))"  class="alert alert-warning">
                                     <div *ngIf="lastName?.errors!['required'] || lastName?.errors!['OnlyWhitespace']">
                                         Last name required
                                     </div>
@@ -58,7 +58,7 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="email" type="text">
-                                <div *ngIf="email?.invalid && ( email?.touched) && email?.value.length!=0"  class="alert alert-warning">
+                                <div *ngIf="(email?.invalid &&  email?.touched) || (email?.touched && email?.value.length!=0 && (email?.invalid))"  class="alert alert-warning">
                                     <div *ngIf="email?.errors!['required'] || email?.errors!['OnlyWhitespace']">
                                         Email required.
                                     </div>
@@ -87,7 +87,7 @@
                                     <option *ngFor="let country of countries" [value]="country.code">{{country.name}}</option>
                                     
                                 </select>
-                                <div *ngIf="country?.invalid && ( country?.touched) && country?.value.length!=0"  class="alert alert-warning">
+                                <div *ngIf="(country?.invalid &&  country?.touched) || (country?.touched && country?.value.length!=0 && (country?.invalid))"  class="alert alert-warning">
                                     <div *ngIf="country?.errors!['required']">
                                         Country required.
                                     </div>
@@ -105,15 +105,15 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="city" >
-                                    <option *ngFor="let state of states">
+                                <select formControlName="state" >
+                                    <option *ngFor="let state of states" [value]="state.name">
                                         {{state.name}}
                                     </option>
                                 </select>
 
-                                <div *ngIf="state?.invalid && ( state?.touched) && state?.value.length!=0"  class="alert alert-warning">
+                                <div *ngIf="(state?.invalid &&  state?.touched) || (state?.touched && state?.value.length!=0 && (state?.invalid))"  class="alert alert-warning">
                                     <div *ngIf="state?.errors!['required']">
-                                        State required.
+                                        City required.
                                     </div>
 
                                     
@@ -130,7 +130,7 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="street" type="text">
-                                <div *ngIf="street?.invalid && ( street?.touched) && street?.value.length!=0"  class="alert alert-warning">
+                                <div *ngIf="(street?.invalid &&  street?.touched) || (street?.touched && street?.value.length!=0 && (street?.invalid))"  class="alert alert-warning">
                                     <div *ngIf="street?.errors!['required'] || street?.errors!['OnlyWhitespace']">
                                         Street required
                                     </div>
@@ -152,7 +152,7 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <input formControlName="zipCode" type="text">
-                                <div *ngIf="(zipCode?.errors!=null) && ( zipCode?.touched) && zipCode?.value.length!=0"  class="alert alert-warning">
+                                <div *ngIf="(zipCode?.invalid &&  zipCode?.touched) || (zipCode?.touched && zipCode?.value.length!=0 && (zipCode?.invalid))"  class="alert alert-warning">
                                 <div *ngIf="zipCode?.errors!['required'] || zipCode?.errors!['OnlyWhitespace']">
                                     Zip code required
                                 </div>
@@ -179,7 +179,10 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="cardType">
-                                    <option>to do</option>
+                                    <option value="visa">Visa</option>
+                                    <option value="master card">Master Card</option>
+                                    <option value="amex">Amex</option>
+                                    <option value="discover">Discover</option>
                                 </select>
 
 
@@ -220,11 +223,11 @@
                                         Card Number required
                                     </div>
     
-                                    <div *ngIf="cardHolder?.errors!['minlength'] || cardNumber?.errors!['maxlength']  ">
+                                    <div *ngIf="cardNumber?.errors!['minlength'] || cardNumber?.errors!['maxlength']  ">
                                         card number length: 16
                                     </div>
 
-                                    <div *ngIf="cardHolder?.errors!['pattern'] ">
+                                    <div *ngIf="cardNumber?.errors!['pattern'] ">
                                         Only numbers please
                                     </div>
                                     </div>

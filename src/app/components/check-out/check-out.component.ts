@@ -32,7 +32,7 @@ constructor(private builder:FormBuilder, private service:CartService,
 
   get firstName(){ return this.formGroup.get("customer.firstName"); }
   get lastName(){ return this.formGroup.get("customer.lastName"); }
-  get email(){ return this.formGroup.get("shippingAddress.email"); }
+  get email(){ return this.formGroup.get("customer.email"); }
   get street(){ return this.formGroup.get("shippingAddress.street"); }
   get state(){ return this.formGroup.get("shippingAddress.state"); }
   get country(){ return this.formGroup.get("shippingAddress.country"); }
@@ -57,7 +57,7 @@ ngOnInit(): void {
       street:new FormControl("", [Validators.required, Validators.minLength(3), CustomValidotors.checkOnlyWhitespace]),
       state:new FormControl("", [Validators.required]),
       country:new FormControl("", [Validators.required]),
-      zipCode:new FormControl("", [Validators.required, Validators.minLength(3), CustomValidotors.checkOnlyWhitespace, Validators.maxLength(3)])
+      zipCode:new FormControl("", [Validators.required, Validators.minLength(3), CustomValidotors.checkOnlyWhitespace])
 
       
     }),
@@ -65,8 +65,8 @@ ngOnInit(): void {
     creditCard:this.builder.group({
       cardType:new FormControl("", [Validators.required]),
       cardHolder:new FormControl("", [Validators.required, Validators.minLength(3), CustomValidotors.checkOnlyWhitespace]),
-      cardNumber:new FormControl("", [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern("[0-9]"),CustomValidotors.checkOnlyWhitespace]),
-      securityCode:new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(3), Validators.pattern("[0-9]"), CustomValidotors.checkOnlyWhitespace]),
+      cardNumber:new FormControl("", [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern("^[0-9]+$"),CustomValidotors.checkOnlyWhitespace]),
+      securityCode:new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(3), Validators.pattern("^[0-9]+$"), CustomValidotors.checkOnlyWhitespace]),
       expiryMonth:new FormControl("", [Validators.required]),
       expiryYear:new FormControl("", [Validators.required])
     })
@@ -78,7 +78,7 @@ ngOnInit(): void {
 }
 
 onSubmit(){
-
+  this.formGroup.markAllAsTouched();
 }
 
 reviewOrder():void{
