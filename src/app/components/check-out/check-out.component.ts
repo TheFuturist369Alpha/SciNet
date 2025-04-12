@@ -10,6 +10,9 @@ import { Country } from '../../Entities/Country/country';
 import { CountryStateService } from '../../Services/CountryStateService/country-state.service';
 import { State } from '../../Entities/State/state';
 import { CustomValidotors } from '../../Utils/custom-validators';
+import { PurchaseService } from '../../Services/PurchaseService/purchase.service';
+import { Purchase } from '../../Entities/Purchase/purchase';
+import { User } from '../../Entities/User/user';
 
 @Component({
   selector: 'app-check-out',
@@ -28,11 +31,12 @@ export class CheckOutComponent implements OnInit {
   
 formGroup!:FormGroup;
 constructor(private builder:FormBuilder, private service:CartService, 
-  private cService:CheckOutService, private csService:CountryStateService){}
+  private cService:CheckOutService, private csService:CountryStateService, private pservice:PurchaseService){}
 
   get firstName(){ return this.formGroup.get("customer.firstName"); }
   get lastName(){ return this.formGroup.get("customer.lastName"); }
   get email(){ return this.formGroup.get("customer.email"); }
+  get password(){ return this.formGroup.get("customer.password"); }
   get street(){ return this.formGroup.get("shippingAddress.street"); }
   get state(){ return this.formGroup.get("shippingAddress.state"); }
   get country(){ return this.formGroup.get("shippingAddress.country"); }
@@ -50,7 +54,10 @@ ngOnInit(): void {
       firstName:new FormControl("", [Validators.required, Validators.minLength(2), CustomValidotors.checkOnlyWhitespace]),
       lastName:new FormControl("", [Validators.required, Validators.minLength(2), CustomValidotors.checkOnlyWhitespace]),
       email:new FormControl("", [Validators.required,
-         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"),CustomValidotors.checkOnlyWhitespace])
+         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"),CustomValidotors.checkOnlyWhitespace],
+        ),
+        password:new FormControl("", [Validators.required,CustomValidotors.checkOnlyWhitespace, Validators.minLength(8)],
+         )
     }),
 
     shippingAddress:this.builder.group({
@@ -77,9 +84,7 @@ ngOnInit(): void {
   this.reviewOrder();
 }
 
-onSubmit(){
-  this.formGroup.markAllAsTouched();
-}
+
 
 reviewOrder():void{
 this.service.totalPrice.subscribe(data=>{
@@ -129,6 +134,25 @@ let code:string= this.formGroup.get("shippingAddress")?.value.country;
 this.csService.getStates(code).subscribe(data=>{this.states=data});
 
 }
+
+makeOrder(userId:number):void{
+  if(this.formGroup.invalid){
+  this.formGroup.markAllAsTouched();
+  return;
+  }
+
+  let purchase=new Purchase();
+  purchase.user=new User(
+    this.formGroup.get("customer")?.value.firstName,
+    this.formGroup.get("customer")?.value.lastName,
+    this.formGroup.get("customer")?.value.email,
+    this.formGroup.get("customer")?.value.password, "blablah");
+  purchase
+  
+  this.pservice.purchase(purchase);
+}
+
+
 
 
 
