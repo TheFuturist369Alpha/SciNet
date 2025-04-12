@@ -9,6 +9,7 @@ import { SubjectService } from './Services/SubjectService/subject.service';
 import { CartService } from './Services/CartService/cart.service';
 import { CheckOutService } from './Services/CheckOutService/check-out.service';
 import { CountryStateService } from './Services/CountryStateService/country-state.service';
+import { PurchaseService } from './Services/PurchaseService/purchase.service';
 
 
 
@@ -16,5 +17,5 @@ import { CountryStateService } from './Services/CountryStateService/country-stat
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), 
-    provideClientHydration(withEventReplay()), provideHttpClient(withFetch()), ServiceService, SubjectService, CartService, CheckOutService,CountryStateService]
+    provideClientHydration(withEventReplay()), provideHttpClient(withFetch()), ServiceService, SubjectService, CartService, CheckOutService,CountryStateService, PurchaseService]
 };
