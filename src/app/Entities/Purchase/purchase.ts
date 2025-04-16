@@ -5,6 +5,6 @@ import { User } from "../User/user";
 export class Purchase {
 
     user!:User;
-    order!:Order;
+    order:Order=new Order();
     items:OrderItem[]=[];
 }

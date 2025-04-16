@@ -4,8 +4,8 @@ import { Order } from "../Order/order";
 
 export class OrderItem {
     quantity:number=0;
-    book!:Book;
-    Order!:Order;
+    book:Book=new Book();
+    
 
     constructor(cart:Cart){
         this.quantity=cart.quantity;

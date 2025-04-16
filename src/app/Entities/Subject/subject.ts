@@ -1,3 +1,3 @@
 export class Subject {
-    public constructor(public id:number, public name:string){}
+    public id:number=0; public name:string="";
 }

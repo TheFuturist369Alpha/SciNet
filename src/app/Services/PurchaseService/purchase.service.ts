@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Purchase } from '../../Entities/Purchase/purchase';
-import { Observable } from 'rxjs';
+import { Observable , map} from 'rxjs';
+import { PurchaceResponse } from '../../Entities/Purchase_Response/purchace-response';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class PurchaseService {
 
    }
 
- public purchase(p:Purchase):Observable<any>{
-  return this.client.post<Purchase>(`${this.baseUrl}/purchase/${p}`, p);
+ public purchase(p:Purchase):Observable<string>{
+  return this.client.post<PurchaceResponse>(`${this.baseUrl}/purchase/${p}`, p).pipe(map(data=>data.order_tracking_number));
  }
 
 }

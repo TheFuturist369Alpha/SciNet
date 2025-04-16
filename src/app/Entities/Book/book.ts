@@ -3,11 +3,9 @@ import {Subject} from '../Subject/subject';
 import { User } from '../User/user';
 
 export class Book {
-    constructor(public id:number, public name:string, public description:string,
-                public price:number, public image_url:string, public available:boolean,
-                public date_launched:string, public subject:Subject, public user:User ){
-                    
-                }
+    public id:number=0; public name:string=""; public description:string="";
+    public price:number=0; public image_url:string=""; public available:boolean=false;
+    public date_launched:string=""; public subject:Subject=new Subject(); public user:User=new User();
 
                 
 }

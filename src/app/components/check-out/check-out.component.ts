@@ -13,6 +13,9 @@ import { CustomValidotors } from '../../Utils/custom-validators';
 import { PurchaseService } from '../../Services/PurchaseService/purchase.service';
 import { Purchase } from '../../Entities/Purchase/purchase';
 import { User } from '../../Entities/User/user';
+import { OrderItem } from '../../Entities/Order_Item/order-item';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Order } from '../../Entities/Order/order';
 
 @Component({
   selector: 'app-check-out',
@@ -31,7 +34,8 @@ export class CheckOutComponent implements OnInit {
   
 formGroup!:FormGroup;
 constructor(private builder:FormBuilder, private service:CartService, 
-  private cService:CheckOutService, private csService:CountryStateService, private pservice:PurchaseService){}
+  private cService:CheckOutService, private csService:CountryStateService, private pservice:PurchaseService, 
+      private router:Router){}
 
   get firstName(){ return this.formGroup.get("customer.firstName"); }
   get lastName(){ return this.formGroup.get("customer.lastName"); }
@@ -135,21 +139,49 @@ this.csService.getStates(code).subscribe(data=>{this.states=data});
 
 }
 
-makeOrder(userId:number):void{
+makeOrder():void{
   if(this.formGroup.invalid){
   this.formGroup.markAllAsTouched();
   return;
   }
 
   let purchase=new Purchase();
-  purchase.user=new User(
-    this.formGroup.get("customer")?.value.firstName,
-    this.formGroup.get("customer")?.value.lastName,
-    this.formGroup.get("customer")?.value.email,
-    this.formGroup.get("customer")?.value.password, "blablah");
-  purchase
+  purchase.user.firstName= this.formGroup.get("customer")?.value.firstName;
+  purchase.user.lastName= this.formGroup.get("customer")?.value.lastName;
+  purchase.user.email= this.formGroup.get("customer")?.value.email;
+  purchase.user.password= this.formGroup.get("customer")?.value.password;
+  purchase.user.image="blablah";
+  purchase.order.total_quantity=this.totalQuantity;
+  purchase.order.total_Price=this.totalPrice;
+  purchase.order.status="ORDER MADE. TRANSACTION IN PROGRESS.";
+  purchase.order.address.city=this.formGroup.get("shippingAddress")?.value.state;
+  purchase.order.address.street=this.formGroup.get("shippingAddress")?.value.street;
+  purchase.order.address.country=this.formGroup.get("shippingAddress")?.value.country;
+  purchase.order.address.zip_code=this.formGroup.get("shippingAddress")?.value.zipCode;
+let i=0;
+  for( let cart of this.books){
+      purchase.items[i]=new OrderItem(cart);
+      i++;
+  }
   
-  this.pservice.purchase(purchase);
+  this.pservice.purchase(purchase).subscribe({
+    next:data=>{
+      alert(`Order tracking code:${data}`);
+      this.resertForm();
+    },
+    error:err=>{
+   alert(`ERROR: ${err.message}`);
+    }
+  });
+}
+
+private resertForm():void{
+  this.service.books=[];
+  this.service.totalPrice.next(0);
+  this.service.totalQuant.next(0);
+  this.formGroup.reset();
+  this.router.navigateByUrl("/books")
+
 }
 
 
