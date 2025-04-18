@@ -140,11 +140,14 @@ this.csService.getStates(code).subscribe(data=>{this.states=data});
 }
 
 makeOrder():void{
-  if(this.formGroup.invalid){
+if(this.formGroup.invalid){
   this.formGroup.markAllAsTouched();
+  console.log("Form invalid");
+  console.log(this.formGroup.errors);
   return;
   }
 
+  console.log("make order called; not inside pusrchase service.");
   let purchase=new Purchase();
   purchase.user.firstName= this.formGroup.get("customer")?.value.firstName;
   purchase.user.lastName= this.formGroup.get("customer")?.value.lastName;
@@ -166,8 +169,9 @@ let i=0;
   
   this.pservice.purchase(purchase).subscribe({
     next:data=>{
+      console.log("Make order called");
       alert(`Order tracking code:${data}`);
-      this.resertForm();
+      this.resetForm();
     },
     error:err=>{
    alert(`ERROR: ${err.message}`);
@@ -175,12 +179,12 @@ let i=0;
   });
 }
 
-private resertForm():void{
+private resetForm():void{
   this.service.books=[];
   this.service.totalPrice.next(0);
   this.service.totalQuant.next(0);
   this.formGroup.reset();
-  this.router.navigateByUrl("/books")
+  this.router.navigateByUrl("/books");
 
 }
 

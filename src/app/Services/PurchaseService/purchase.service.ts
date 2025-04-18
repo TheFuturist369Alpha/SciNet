@@ -16,7 +16,7 @@ export class PurchaseService {
    }
 
  public purchase(p:Purchase):Observable<string>{
-  return this.client.post<PurchaceResponse>(`${this.baseUrl}/purchase/${p}`, p).pipe(map(data=>data.order_tracking_number));
+  return this.client.post<PurchaceResponse>(`${this.baseUrl}/purchase`, p).pipe(map(data=>data.order_tracking_number));
  }
 
 }

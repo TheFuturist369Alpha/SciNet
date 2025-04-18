@@ -308,7 +308,7 @@
                             <div class="input-space">
                                 <select formControlName="expiryMonth" >
                                    
-                                    <option *ngFor="let month of months">
+                                    <option *ngFor="let month of months" [value]="month">
                                         {{month}}
                                     </option>
                                 </select>

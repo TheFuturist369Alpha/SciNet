@@ -4,7 +4,7 @@ import { User } from "../User/user";
 
 export class Purchase {
 
-    user!:User;
+    user:User=new User();
     order:Order=new Order();
     items:OrderItem[]=[];
 }
