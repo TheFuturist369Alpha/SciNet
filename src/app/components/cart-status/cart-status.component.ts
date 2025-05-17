@@ -14,11 +14,12 @@ export class CartStatusComponent implements OnInit {
   public totalPrice:number=0;
   public totalQuantity:number=0
     constructor(private service:CartService, private router:Router){
-  
+    
     }
 
     ngOnInit(): void {
       this.getCartDetails(); 
+      console.log(this.totalQuantity);
     }
 
     public getCartDetails():void{

@@ -15,14 +15,13 @@ import { OktaAuth } from '@okta/okta-auth-js';
 import thisAppConfig from './config/this-app-config';
 
 
-const okt=new OktaAuth(thisAppConfig.oidc);
+const oktaAuth=new OktaAuth(thisAppConfig.oidc);
 
 
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), 
     provideClientHydration(withEventReplay()), provideHttpClient(withFetch()), ServiceService, SubjectService, CartService, 
-    OktaAuthStateService, CheckOutService, CountryStateService, PurchaseService, { provide: OKTA_CONFIG, useValue: {oktaAuth: okt} },
-    {provide: OKTA_AUTH, useValue:okt}
+    OktaAuthStateService, CheckOutService, CountryStateService, PurchaseService
   ]
 };

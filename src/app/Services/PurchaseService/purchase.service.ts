@@ -8,7 +8,7 @@ import { PurchaceResponse } from '../../Entities/Purchase_Response/purchace-resp
   providedIn: 'root'
 })
 export class PurchaseService {
-  private baseUrl:string="http://localhost:8080/checkout";
+  private baseUrl:string="https://localhost:8400/api/checkout";
 
   constructor(private client:HttpClient) {
 
@@ -16,6 +16,7 @@ export class PurchaseService {
    }
 
  public purchase(p:Purchase):Observable<string>{
+  console.log(p.order.total_price);
   return this.client.post<PurchaceResponse>(`${this.baseUrl}/purchase`, p).pipe(map(data=>data.order_tracking_number));
  }
 

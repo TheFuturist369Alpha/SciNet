@@ -1,17 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Book } from '../../Entities/Book/book';
 import { Cart } from '../../Entities/Cart/cart';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 public books:Cart[]=[];
-public totalQuant:Subject<number>=new Subject<number>();
-public totalPrice:Subject<number>=new Subject<number>();
+public totalQuant:BehaviorSubject<number>=new BehaviorSubject<number>(0);
+public totalPrice:BehaviorSubject<number>=new BehaviorSubject<number>(0);
 
-  constructor() { }
+  constructor() {
+    let data=null;
+if (typeof window !== "undefined") 
+      data=JSON.parse(sessionStorage.getItem('books')!);
+
+      if(data!=null)
+        this.books=data;
+      this.computeTotal();
+      
+
+
+      
+   }
 
   public addToCart(book:Cart){
     let exists:boolean=false;
@@ -39,7 +51,14 @@ public totalPrice:Subject<number>=new Subject<number>();
 
       this.totalPrice.next(totalPrice);
       this.totalQuant.next(totalQuantity);
-    
+     this.persistItems();
     //console.log(`Total:price${totalPrice}`);
   }
+
+  public persistItems():void{
+    if (typeof window !== "undefined") 
+    sessionStorage.setItem('books', JSON.stringify(this.books));
+  }
+
+  
 }

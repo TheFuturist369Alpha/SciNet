@@ -8,7 +8,7 @@ import{Subject} from '../../Entities/Subject/subject';
 })
 export class SubjectService {
 
-  private baseUrl:string="http://localhost:8080/subjectapi";
+  private baseUrl:string="https://localhost:8400/api/subjectapi";
   constructor(private client:HttpClient) { }
 
 

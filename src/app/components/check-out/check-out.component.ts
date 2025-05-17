@@ -25,7 +25,7 @@ import { Order } from '../../Entities/Order/order';
 })
 export class CheckOutComponent implements OnInit {
   public totalQuantity:number=0;
-  public totalPrice:number=0;
+  public totalPrice:number=0.00;
   public books:Cart[]=[];
   public years:number[]=[];
   public months:number[]=[];
@@ -155,12 +155,13 @@ if(this.formGroup.invalid){
   purchase.user.password= this.formGroup.get("customer")?.value.password;
   purchase.user.image="blablah";
   purchase.order.total_quantity=this.totalQuantity;
-  purchase.order.total_Price=this.totalPrice;
+  purchase.order.total_price=parseFloat(this.totalPrice.toFixed(2));
   purchase.order.status="ORDER MADE. TRANSACTION IN PROGRESS.";
   purchase.order.address.city=this.formGroup.get("shippingAddress")?.value.state;
   purchase.order.address.street=this.formGroup.get("shippingAddress")?.value.street;
   purchase.order.address.country=this.formGroup.get("shippingAddress")?.value.country;
   purchase.order.address.zip_code=this.formGroup.get("shippingAddress")?.value.zipCode;
+  console.log(this.totalPrice);
 let i=0;
   for( let cart of this.books){
       purchase.items[i]=new OrderItem(cart);

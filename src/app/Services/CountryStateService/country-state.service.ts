@@ -13,11 +13,11 @@ export class CountryStateService {
 
   public getCountries():Observable<Country[]>{
 
-    return this.client.get<GetResponseCountries>("http://localhost:8080/countries").pipe(map(data=>data._embedded.countries));
+    return this.client.get<GetResponseCountries>("https://localhost:8400/api/countries").pipe(map(data=>data._embedded.countries));
   }
 
   public getStates(code:string):Observable<State[]>{
-    return this.client.get<GetResponseStates>(`http://localhost:8080/states/search/findByCountryCode?code=${code}`).pipe(map(data=>data._embedded.states));
+    return this.client.get<GetResponseStates>(`https://localhost:8400/api/states/search/findByCountryCode?code=${code}`).pipe(map(data=>data._embedded.states));
   }
 
 
