@@ -1,1 +1,2 @@
-declare module '@okta/okta-auth-js';
+declare var Stripe:any;
+declare var elements:any;

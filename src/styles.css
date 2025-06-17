@@ -3,6 +3,9 @@
  * Common CSS
  * ----------------------------
  */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
  *{
     margin:0;
@@ -1103,3 +1106,6 @@ footer ul li{
 opacity:0.5;
 cursor: not-allowed;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

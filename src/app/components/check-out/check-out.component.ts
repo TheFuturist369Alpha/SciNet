@@ -16,6 +16,8 @@ import { User } from '../../Entities/User/user';
 import { OrderItem } from '../../Entities/Order_Item/order-item';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Order } from '../../Entities/Order/order';
+import { environment } from '../../../environments/env';
+import { PaymentInfoDTO } from '../../DTOs/payment-info-dto';
 
 @Component({
   selector: 'app-check-out',
@@ -31,6 +33,12 @@ export class CheckOutComponent implements OnInit {
   public months:number[]=[];
   public countries:Country[]=[];
   public states:State[]=[];
+  public disabled:boolean=false;
+
+  Stripe=Stripe(environment.stripePublishableKey);
+  paymentInfo:PaymentInfoDTO=new PaymentInfoDTO();
+  cardElement:any;
+  displayErrors:any="";
   
 formGroup!:FormGroup;
 constructor(private builder:FormBuilder, private service:CartService, 
@@ -45,20 +53,22 @@ constructor(private builder:FormBuilder, private service:CartService,
   get state(){ return this.formGroup.get("shippingAddress.state"); }
   get country(){ return this.formGroup.get("shippingAddress.country"); }
   get zipCode(){ return this.formGroup.get("shippingAddress.zipCode"); }
-  get cardType(){ return this.formGroup.get("creditCard.cardType"); }
+  /*get cardType(){ return this.formGroup.get("creditCard.cardType"); }
   get cardHolder(){ return this.formGroup.get("creditCard.cardHolder"); }
   get cardNumber(){ return this.formGroup.get("creditCard.cardNumber"); }
   get securityCode(){ return this.formGroup.get("creditCard.securityCode"); }
   get expiryMonth(){ return this.formGroup.get("creditCard.expiryMonth"); }
-  get expiryYear(){ return this.formGroup.get("creditCard.expiryYear"); }
+  get expiryYear(){ return this.formGroup.get("creditCard.expiryYear"); }*/
 
 ngOnInit(): void {
+
+  this.setupStripeForm();
   this.formGroup=this.builder.group({
     customer:this.builder.group({
       firstName:new FormControl("", [Validators.required, Validators.minLength(2), CustomValidotors.checkOnlyWhitespace]),
       lastName:new FormControl("", [Validators.required, Validators.minLength(2), CustomValidotors.checkOnlyWhitespace]),
       email:new FormControl("", [Validators.required,
-         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"),CustomValidotors.checkOnlyWhitespace],
+         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"), CustomValidotors.checkOnlyWhitespace],
         ),
         password:new FormControl("", [Validators.required,CustomValidotors.checkOnlyWhitespace, Validators.minLength(8)],
          )
@@ -73,18 +83,18 @@ ngOnInit(): void {
       
     }),
 
-    creditCard:this.builder.group({
+   /* creditCard:this.builder.group({
       cardType:new FormControl("", [Validators.required]),
       cardHolder:new FormControl("", [Validators.required, Validators.minLength(3), CustomValidotors.checkOnlyWhitespace]),
       cardNumber:new FormControl("", [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern("^[0-9]+$"),CustomValidotors.checkOnlyWhitespace]),
       securityCode:new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(3), Validators.pattern("^[0-9]+$"), CustomValidotors.checkOnlyWhitespace]),
       expiryMonth:new FormControl("", [Validators.required]),
       expiryYear:new FormControl("", [Validators.required])
-    })
+    })*/
   });
   
   this.getCountryState();
-  this.populateMonthsAndYears(new Date().getMonth()+1);
+  //this.populateMonthsAndYears(new Date().getMonth()+1);
   this.reviewOrder();
 }
 
@@ -101,7 +111,7 @@ this.service.totalQuant.subscribe(data=>{
 this.books=this.service.books;
 }
 
-populateMonthsAndYears(strt:number){
+/*populateMonthsAndYears(strt:number){
   this.cService.getCreditCardMonths(strt).subscribe(data=>{
     this.months=data;
     console.log(`Months:${JSON.stringify(data)}`);
@@ -125,7 +135,7 @@ handleMonthsYears(){
     this.populateMonthsAndYears(1);
   }
 
-}
+}*/
 
 getCountryState():void{
 this.csService.getCountries().subscribe(data=>{
@@ -140,6 +150,7 @@ this.csService.getStates(code).subscribe(data=>{this.states=data});
 }
 
 makeOrder():void{
+  
 if(this.formGroup.invalid){
   this.formGroup.markAllAsTouched();
   console.log("Form invalid");
@@ -147,7 +158,7 @@ if(this.formGroup.invalid){
   return;
   }
 
-  console.log("make order called; not inside pusrchase service.");
+  
   let purchase=new Purchase();
   purchase.user.firstName= this.formGroup.get("customer")?.value.firstName;
   purchase.user.lastName= this.formGroup.get("customer")?.value.lastName;
@@ -161,6 +172,10 @@ if(this.formGroup.invalid){
   purchase.order.address.street=this.formGroup.get("shippingAddress")?.value.street;
   purchase.order.address.country=this.formGroup.get("shippingAddress")?.value.country;
   purchase.order.address.zip_code=this.formGroup.get("shippingAddress")?.value.zipCode;
+
+  this.paymentInfo.amount=Math.round(this.totalPrice*100);
+  this.paymentInfo.currency="USD";
+  this.paymentInfo.receipt_email=purchase.user.email;
   console.log(this.totalPrice);
 let i=0;
   for( let cart of this.books){
@@ -168,7 +183,7 @@ let i=0;
       i++;
   }
   
-  this.pservice.purchase(purchase).subscribe({
+ /* this.pservice.purchase(purchase).subscribe({
     next:data=>{
       console.log("Make order called");
       alert(`Order tracking code:${data}`);
@@ -177,18 +192,75 @@ let i=0;
     error:err=>{
    alert(`ERROR: ${err.message}`);
     }
-  });
+  });*/
+
+if(!this.formGroup.invalid && this.displayErrors.textContent==""){
+  this.disabled=false;
+  console.log("Payment intent yet to be sent; not inside pusrchase service.");
+    this.pservice.createPaymentIntent(this.paymentInfo).subscribe((response)=>
+      {
+        this.Stripe.confirmCardPayment(response.client_secret, {
+          payment_method:{
+            card:this.cardElement
+          }
+        }, {handleActions:false}).then((result: any)=>{
+          if(result.error){
+            alert("There was an error: "+result.error.message);
+            this.disabled=false;
+          }
+          else{
+            // console.log("Payment intent sent; not inside pusrchase service.");
+            this.pservice.purchase(purchase).subscribe({
+              next:data=>{
+      console.log("Make order called");
+      alert(`Order tracking code:${data}`);
+      this.resetForm();
+      this.disabled=false;
+    },
+    error:err=>{
+   alert(`ERROR: ${err.message}`);
+    }
+            })
+          }
+        }); console.log(response);
+      })
+
+}
+
+else{
+  this.formGroup.markAllAsTouched();
+  return;
+}
+
 }
 
 private resetForm():void{
   this.service.books=[];
   this.service.totalPrice.next(0);
   this.service.totalQuant.next(0);
+  this.service.persistItems();
   this.formGroup.reset();
   this.router.navigateByUrl("/books");
 
 }
 
+private setupStripeForm():void{
+  let elements=this.Stripe.elements();
+  this.cardElement=elements.create('card',{hidePostalCode:true});
+  this.cardElement.mount('#card-element');
+
+  this.cardElement.on("change", (event:any)=>{
+    this.displayErrors=document.getElementById("card-errors");
+
+  if(event.complete){
+    this.displayErrors.textContent="";
+
+  }
+
+  else if(event.error)
+    this.displayErrors.textContent=event.error.message;
+  })
+}
 
 
 

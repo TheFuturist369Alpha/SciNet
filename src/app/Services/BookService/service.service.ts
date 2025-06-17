@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from '../../Entities/Book/book';
 import { map, Observable } from 'rxjs';
+import { environment } from '../../../environments/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
-  private baseUrl1:string="https://localhost:8400/api";
+  private baseUrl1:string=environment.sciNetBase;
   
 
   constructor(private httpClient:HttpClient) { }
