@@ -1,53 +1,20 @@
-<div class="page-wrapper">
-
-  <!-- MENU SIDEBAR-->
-  <aside class="menu-sidebar d-none d-lg-block">
-    <div class="logo">
-      <a href="/books">
-        <img src="assets/images/logo.png" alt="sciNet"  style="width: 70px; height:auto">
-      </a>
+<header class="border-b shadow-md p-3 w-full">
+  <div class="flex align-middle items-center justify-between max-w-screen-2xl mx-auto">
+    <img src="assets\images\logo.png" class="max-h-16">
+    <nav class="flex gap-3 my-2 uppercase text-xl">
+      <a>Home</a>
+      <a>Contact</a>
+    </nav>
+    <div class="flex gap-3 align-middle">
+      <app-cart-status></app-cart-status>
+      <button mat-stroked-button>Login</button>
     </div>
-    <app-menu-list></app-menu-list>
-  </aside>
-  <!-- END MENU SIDEBAR-->
-
-  <!-- PAGE CONTAINER-->
-  <div class="page-container">
-    <!-- HEADER DESKTOP-->
-    <header class="header-desktop">
-      <div class="section-content section-content-p30">
-        <div class="container-fluid">
-          <div class="header-wrap">
-            <app-search></app-search>
-
-            <ul class="horizont-list">
-           <li><app-user-profile></app-user-profile></li> 
-           <!--<li><app-login-button></app-login-button></li>-->
-            <li><app-cart-status></app-cart-status></li>
-          </ul>
-          </div>
-          <div class="account-wrap"></div>
-        </div>
-      </div>
-    </header>
-    <!-- END HEADER DESKTOP-->
-
-    <!-- MAIN CONTENT-->
-    <!--<book-list></book-list>-->
-    <router-outlet></router-outlet>
-    
-    <footer>
-      <ul>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Contact Us</a></li>
-        <li><a href="#">Help</a></li>
-      </ul>
-    </footer>
   </div>
+</header>
 
-  <!-- END PAGE CONTAINER-->
-
-
-	
-
+<div class="container mt-6">
+  <book-list></book-list>
 </div>
+
+
+

@@ -2,10 +2,13 @@ import { Component, NgModule, OnInit } from '@angular/core';
 import { CartService } from '../../Services/CartService/cart.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import {MatIcon} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
+import {MatBadge} from '@angular/material/badge';
 
 @Component({
   selector: 'app-cart-status',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatIcon, MatButton, MatBadge],
   templateUrl: './cart-status.component.html',
   styleUrl: './cart-status.component.css'
 })

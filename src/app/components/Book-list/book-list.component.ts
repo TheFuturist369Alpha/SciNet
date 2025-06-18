@@ -7,10 +7,15 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { Cart } from '../../Entities/Cart/cart';
 import { CartService } from '../../Services/CartService/cart.service';
+import {MatCard, MatCardActions, MatCardContent} from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { MatButton } from '@angular/material/button';
+import { MenuListComponent } from '../menu-list/menu-list.component';
 
 @Component({
   selector: 'book-list',
-  imports: [NgFor,CommonModule,RouterModule,NgbModule],
+  imports: [NgFor,CommonModule,RouterModule,NgbModule, MatCard, MatCardContent, MatButton, MatCardActions, MatIcon],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.css'
 })
@@ -24,8 +29,10 @@ public pageNum:number=1;
 public pageSize:number=8;
 public totalElements=0;
 private previousCat:number=0;
+public bookNums:number[]=[];
 
-constructor(private service:ServiceService, public route:ActivatedRoute, private cartService:CartService){
+constructor(private service:ServiceService, public route:ActivatedRoute, private cartService:CartService, 
+  private dialogue:MatDialog){
 }
 
 
@@ -103,5 +110,29 @@ public addToCart(book:Book):void{
 
  console.log(`Added ${book.name} to cart`);
 }
+
+public openDialog(){
+  const dialogRef=this.dialogue.open(MenuListComponent,{
+    maxWidth:"90vw",
+    width:"370px",
+    height:"400px",
+    data:{
+      bookNums:this.bookNums
+    }
+    
+   
+  });
+
+  dialogRef.afterClosed().subscribe({
+    next:result=>{
+      if(result && result.selectedSubjects){
+        this.bookNums=result.selectedSubjects;
+      }
+      this.service.getListBySubject(this.bookNums).subscribe(data=>{this.Books=data;})
+    }
+  });
+}
+
+
 
 }

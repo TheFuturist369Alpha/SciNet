@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from '../../Entities/Book/book';
 import { map, Observable } from 'rxjs';
@@ -14,11 +14,14 @@ export class ServiceService {
   constructor(private httpClient:HttpClient) { }
   
    getListService(catNum?:number):Observable<Book[]>{
-    if(catNum!==null && catNum!==undefined){
-    return this.httpClient.get<Book[]>(`${this.baseUrl1}/bookapi/getbooksbysubjectid?id=${catNum}`);
+    return this.httpClient.get<Book[]>(`${this.baseUrl1}/bookapi/getbooks`);
    }
 
-    return this.httpClient.get<Book[]>(`${this.baseUrl1}/bookapi/getbooks`);
+   getListBySubject(ids:number[]):Observable<Book[]>{
+      let params=new HttpParams();
+      ids.forEach(id=>params=params.append("id",id));
+    return this.httpClient.get<Book[]>(`${this.baseUrl1}/bookapi/getbooksbysubjectid`,{params});
+   
    }
 
 

@@ -1,57 +1,26 @@
-<div class="main-content">
-    <div class="section-content section-content-p30">
-        <div class="container-fluid">
-            <div class="row">
-                <div *ngFor="let book of Books" class="col-md-3">
-                    <div class="product-box">
+<div class="flex flex-col gap-3">
+    <div class="flex justify-end">
+        <button mat-stroked-button  (click)="openDialog()">
+            <mat-icon>filter_list</mat-icon>
+            Filter
+        </button>
+    </div>
+    <div class="grid grid-cols-4 gap-4">
+    <div *ngFor="let book of Books">
+                    <mat-card appearance="raised"  class="w-64 p-2 text-sm">
                         <a routerLink="/book/{{book.id}}"><img src={{book.image_url}} alt="jalvis" class="img-responsive"></a>
-                        <h1 class="light-font">{{book.name}}</h1>
-                        <div class="light-font"  >{{book.date_launched | date:'dd/MM/yyyy'}}</div>
-                        <button (click)="addToCart(book)" class="primary-btn btn "><div class="light-font"> Add to cart</div></button>
-                    </div>
+                        <mat-card-content class="mt-2"><h2 class="text-sm font-semibold uppercase">{{book.name}}</h2>
+                        <p class="font-light">{{book.price | currency}}</p>
+                    
+                    </mat-card-content>
+                       <mat-card-actions>
+                        <!--<div class="light-font"  >{{book.date_launched | date:'dd/MM/yyyy'}}</div>-->
+                        <button mat-stroked-button (click)="addToCart(book)" class="w-full modern-btn "> 
+                            <mat-icon>add_shopping_cart</mat-icon >Add to cart</button>
+                    </mat-card-actions></mat-card>
                 
                 </div>
-            </div>
 
-            <div *ngIf="Books?.length==0" class="alert alert-warning col-md-12" role="alert"> No book found</div>
-
-                <div class="footer-pagination">
-                    <div class="row">
-                        <div class="col-md-6">
-                        </div>
-
-
-                        <div class="col-md-6">
-                            <div class="row">
-                               <div> <div class="col-md-9" style="padding-left:30%;">
-                                    <ngb-pagination [(page)]="this.pageNum"
-                                                    [pageSize]="this.pageSize"
-                                                    [collectionSize]="this.totalElements"
-                                                    [boundaryLinks]="true"
-                                                    [maxSize]="1"
-                                                    [ellipses]="true"
-                                                    [rotate]="false"
-                                                    (pageChange)="loadData()" class="pagination-des">
-                                                    
-                                        <ng-template ngbPaginationPrevious>prev</ng-template>
-                                       <ng-template ngbPaginationNext>next</ng-template>
-                                    </ngb-pagination>
-                                </div>
-
-                                
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-        </div>
-    </div>
 </div>
-
-<!-- END MAIN CONTENT-->
-
-
-
-
+</div>
 
