@@ -4,10 +4,16 @@ import { Book } from '../../Entities/Book/book';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../../Services/CartService/cart.service';
 import { Cart } from '../../Entities/Cart/cart';
+import { CommonModule } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-book-detail',
-  imports: [],
+  imports: [CommonModule, MatButton, MatIcon, MatFormField, MatInput, MatLabel, MatDivider],
   templateUrl: './book-detail.component.html',
   styleUrl: './book-detail.component.css'
 })

@@ -1147,3 +1147,14 @@ cursor: not-allowed;
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mdc-notched-outline__notch{
+    border-right-style: none !important;
+}
+
+.custom-theme{
+    .mdc-button, .mdc-raised-button, .mdc-stroked-button, .mdc-flat-button{
+        @apply rounded-md
+    }
+}
+

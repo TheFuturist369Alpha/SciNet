@@ -11,11 +11,16 @@ import {MatCard, MatCardActions, MatCardContent} from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MenuListComponent } from '../menu-list/menu-list.component';
+import { FormsModule} from '@angular/forms';
+import { SearchComponent } from "../search/search.component";
 
 @Component({
   selector: 'book-list',
-  imports: [NgFor,CommonModule,RouterModule,NgbModule, MatCard, MatCardContent, MatButton, MatCardActions, MatIcon],
+  imports: [NgFor, CommonModule, RouterModule, NgbModule, MatCard,
+    MatCardContent, MatButton, MatPaginator, MatTooltip, MatCardActions, MatIcon, FormsModule, SearchComponent],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.css'
 })
@@ -25,11 +30,13 @@ public Books:Book[]=[];
 public selectedBooks:Book[]=[];
 public catNum:number=0;
 public useSearch:boolean=false;
-public pageNum:number=1;
-public pageSize:number=8;
+public pageNum:number=0;
+public pageSize:number=10;
+public pageSizeOptions:number[]=[10, 20, 30]
 public totalElements=0;
 private previousCat:number=0;
 public bookNums:number[]=[];
+public keyword:string="";
 
 constructor(private service:ServiceService, public route:ActivatedRoute, private cartService:CartService, 
   private dialogue:MatDialog){
@@ -40,7 +47,7 @@ constructor(private service:ServiceService, public route:ActivatedRoute, private
 
   
  ngOnInit(): void{
-  this.route.paramMap.subscribe(()=>{this.loadData();});
+  this.route.paramMap.subscribe(()=>{ this.loadData();});
   
 }
 
@@ -48,8 +55,11 @@ constructor(private service:ServiceService, public route:ActivatedRoute, private
 
 public loadData():void{
   this.useSearch=this.route.snapshot.paramMap.has("keyword");
+  console.log(this.useSearch)
+  console.log('Param keys:', this.route.snapshot.paramMap.keys);
   if(this.useSearch){
     this.fromSearch();
+   
   }
   else{
 this.fromList();
@@ -63,8 +73,8 @@ private fromList():void{
 
   if(hasId){
     this.catNum=+this.route.snapshot.paramMap.get("id")!;
-    this.service.getBooksPaginated(this.pageNum-1, this.pageSize, this.catNum)
-    .subscribe(data=>{this.pageNum=data.page.number+1
+    this.service.getBooksPaginated(this.pageNum, this.pageSize, this.catNum)
+    .subscribe(data=>{this.pageNum=data.page.number+1;
                      this.pageSize=data.page.size;
                      this.Books=data._embedded.books;
                      this.totalElements=data.page.totalElements;
@@ -72,8 +82,8 @@ private fromList():void{
     
   }
   else{
-    this.service.getBooksPaginated(this.pageNum-1, this.pageSize).subscribe(data=>{
-      this.pageNum=data.page.number+1
+    this.service.getBooksPaginated(this.pageNum, this.pageSize).subscribe(data=>{
+      this.pageNum=data.page.number;
                      this.pageSize=data.page.size;
                      this.Books=data._embedded.books;
                      this.totalElements=data.page.totalElements;
@@ -87,12 +97,12 @@ if(this.catNum!=this.previousCat){
 
 }
 
-private fromSearch():void{
-
-   let paramValue:string=this.route.snapshot.paramMap.get("keyword")!;
-   this.service.getSearchService(paramValue).subscribe(data=>{this.Books=data;});
-
-
+public fromSearch():void{
+  const param:string|null=this.route.snapshot.paramMap.get("keyword");
+  console.log(param);
+  if(param!=null)
+   this.service.getSearchService(param).subscribe(data=>{this.Books=data;});
+  this.pageNum=0;
 
 }
 
@@ -126,11 +136,18 @@ public openDialog(){
   dialogRef.afterClosed().subscribe({
     next:result=>{
       if(result && result.selectedSubjects){
+        this.pageNum=0;
         this.bookNums=result.selectedSubjects;
       }
       this.service.getListBySubject(this.bookNums).subscribe(data=>{this.Books=data;})
     }
   });
+}
+handlePaginator(event:PageEvent){
+  this.pageNum=event.pageIndex;
+  this.pageSize=event.pageSize;
+  this.fromList();
+
 }
 
 

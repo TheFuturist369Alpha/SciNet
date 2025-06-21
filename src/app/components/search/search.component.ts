@@ -1,22 +1,27 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
-  imports: [],
+  imports: [FormsModule, MatIcon],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
 export class SearchComponent  {
-public constructor(private router:Router){}
+  public keyword:string=""
+public constructor(private router:Router, ){}
 
-public doSearch(data:string):void{
+public doSearch():void{
 
-  if(data==""){
+  if(this.keyword==""){
     this.router.navigateByUrl("/books");
   }
 else{
-  this.router.navigateByUrl("/search/"+data);
+  this.router.navigateByUrl("/search/"+this.keyword);
+  
+  
 }
 }
 

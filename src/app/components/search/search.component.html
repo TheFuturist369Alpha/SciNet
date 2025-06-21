@@ -1,8 +1,8 @@
-<div class="form-header" >
-    <input #inputdata class="au-input au-input-xl" type="text" 
-      placeholder="Search for data ..." (keyup)="doSearch(inputdata.value)"/>
-    <button class="au-btn-submit" (click)="doSearch(inputdata.value)">
-      Search
-    </button>
-   
-</div>
+ <form #searchForm="ngForm" (ngSubmit)="doSearch()" class="relative flex items-center w-96 max-w-md mx-4">
+            <input type="search" class="block h-2 w-full p-4 text-sm text-grey-900 border border-gray-300 rounded-lg"
+            placeholder="search" name="search" [(ngModel)]="keyword" (keyup.enter)="doSearch()"
+            />
+            <button mat-icon-button type="submit" class="absolute inset-y-0 right-8 top-2 flex items-center pl-3">
+                <mat-icon>search</mat-icon>
+            </button>
+        </form>
