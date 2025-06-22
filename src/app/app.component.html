@@ -1,4 +1,4 @@
-<header class="border-b shadow-md p-3 w-full">
+<header class="border-b shadow-md p-3 w-full max-h-20 fixed top-0 z-50 bg-white">
   <div class="flex align-middle items-center justify-between max-w-screen-2xl mx-auto">
     <img src="assets\images\logo.png" class="max-h-16">
     <nav class="flex gap-3 my-2 uppercase text-xl">
@@ -8,11 +8,12 @@
     <div class="flex gap-3 align-middle">
       <app-cart-status></app-cart-status>
       <button mat-stroked-button>Login</button>
+      <button mat-stroked-button>Register</button>
     </div>
   </div>
 </header>
 
-<div class="container w-full mt-4">
+<div class="container w-full mt-24">
   <router-outlet></router-outlet>
 </div>
 

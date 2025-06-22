@@ -25,6 +25,10 @@ if (typeof window !== "undefined")
       
    }
 
+   public getCart():Cart[]{
+    return this.books;
+   }
+
   public addToCart(book:Cart){
     let exists:boolean=false;
     let bk:Cart=this.books.find(temp=>temp.id===book.id)!;

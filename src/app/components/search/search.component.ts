@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SearchComponent  {
   public keyword:string=""
-public constructor(private router:Router, ){}
+public constructor(private router:Router ){}
 
 public doSearch():void{
 

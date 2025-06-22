@@ -20,6 +20,7 @@ export class ServiceService {
    getListBySubject(ids:number[]):Observable<Book[]>{
       let params=new HttpParams();
       ids.forEach(id=>params=params.append("id",id));
+      
     return this.httpClient.get<Book[]>(`${this.baseUrl1}/bookapi/getbooksbysubjectid`,{params});
    
    }
