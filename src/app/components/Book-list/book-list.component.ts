@@ -3,7 +3,7 @@ import { Book } from '../../Entities/Book/book';
 import { ServiceService } from '../../Services/BookService/service.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { Subject } from '../../Entities/Subject/subject';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Route, Router, RouterModule } from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { Cart } from '../../Entities/Cart/cart';
 import { CartService } from '../../Services/CartService/cart.service';
@@ -38,7 +38,8 @@ private previousCat:number=0;
 public bookNums:number[]=[];
 public keyword:string="";
 
-constructor(private service:ServiceService, public route:ActivatedRoute, private cartService:CartService, 
+
+constructor(private service:ServiceService, public router:Router, public route:ActivatedRoute, private cartService:CartService, 
   private dialogue:MatDialog){
 }
 
@@ -116,10 +117,17 @@ this.loadData();
 public addToCart(book:Book):void{
 
   let cart:Cart=new Cart(book);
+  cart.isSelected=book.selected=true;
   this.cartService.addToCart(cart);
+  
+  
 
  console.log(`Added ${book.name} to cart`);
 }
+
+ public redirectToCartDetails(){
+        this.router.navigateByUrl("/cart-details");
+    }
 
 public openDialog(){
   const dialogRef=this.dialogue.open(MenuListComponent,{

@@ -4,37 +4,27 @@ import { Cart } from '../../../Entities/Cart/cart';
 import { CartService } from '../../../Services/CartService/cart.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { CartItemComponentComponent } from "../../cart-item-component/cart-item-component.component";
+import { OrderSummaryComponent } from "../../order-summary/order-summary.component";
 
 @Component({
   selector: 'app-cartdetail',
-  imports: [NgFor, CartItemComponentComponent,CommonModule, RouterModule, CartItemComponentComponent],
+  imports: [NgFor, CartItemComponentComponent, CommonModule, RouterModule, CartItemComponentComponent, OrderSummaryComponent],
   templateUrl: './cartdetail.component.html',
   styleUrl: './cartdetail.component.css'
 })
 export class CartdetailComponent implements OnInit{
 
   public cartItems:Cart[]=[];
-  public totalPrice:number=0;
-  public itemQuantity:number=0;
 
 constructor(private router:ActivatedRoute, private service:CartService){
 
 }
 
 ngOnInit(): void {
-  this.router.paramMap.subscribe(()=>{this.loadTotal()});
+  this.router.paramMap.subscribe(()=>{this.cartItems=this.service.getCart();});
 }
 
-loadTotal():void{
-this.service.totalPrice.subscribe(data=>{this.totalPrice=data});
 
-this.service.totalQuant.subscribe(data=>{this.itemQuantity=data});
-
-this.cartItems=this.service.books;
-
-this.service.computeTotal();
-
-}
 
 
 

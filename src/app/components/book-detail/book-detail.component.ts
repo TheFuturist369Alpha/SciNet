@@ -10,10 +10,11 @@ import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatDivider } from '@angular/material/divider';
+import { MatCard, MatCardActions } from '@angular/material/card';
 
 @Component({
   selector: 'app-book-detail',
-  imports: [CommonModule, MatButton, MatIcon, MatFormField, MatInput, MatLabel, MatDivider],
+  imports: [CommonModule, MatButton,MatCard, MatCardActions, MatIcon, MatFormField, MatInput, MatLabel, MatDivider],
   templateUrl: './book-detail.component.html',
   styleUrl: './book-detail.component.css'
 })
@@ -21,7 +22,7 @@ export class BookDetailComponent implements OnInit {
 
  
   public book!:Book;
-  constructor(private service:ServiceService, private router:ActivatedRoute, 
+  constructor(private service:ServiceService, private route:Router,private router:ActivatedRoute, 
     private cartService:CartService){}
 
   ngOnInit(): void {
@@ -38,8 +39,12 @@ export class BookDetailComponent implements OnInit {
   }
 
   public addToCart(book:Book):void{
+    this.book.selected=true;
     this.cartService.addToCart(new Cart(book));
   }
 
+  public redirectToCartDetails(){
+        this.route.navigateByUrl("/cart-details");
+    }
 
 }

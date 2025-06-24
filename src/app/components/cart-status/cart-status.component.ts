@@ -33,4 +33,6 @@ export class CartStatusComponent implements OnInit {
     public redirectToCartDetails(){
         this.router.navigateByUrl("/cart-details");
     }
+
+   
 }

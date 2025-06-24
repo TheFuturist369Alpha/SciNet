@@ -33,12 +33,16 @@ ngOnInit(): void {
 inc(item:Cart){
   item.quantity+=1;
   item.disableBtn=false;
+  this.cserve.computeTotal();
   this.cserve.persistItems();
+  this.route.navigateByUrl("/cart-details");
 }
 dec(item:Cart){
   if(item.quantity > 1){
   item.quantity--;
+   this.cserve.computeTotal();
   this.cserve.persistItems();
+  this.route.navigateByUrl("/cart-details");
 item.disableBtn=false;
   }
 
@@ -52,8 +56,10 @@ item.disableBtn=true;
 deleteItem(item?:Cart){
 let i:number=this.cserve.getCart().findIndex((c)=>c.id===item?.id);
 this.cserve.getCart().splice(i,1);
-this.route.navigateByUrl("/cart-details")
+this.cserve.computeTotal();
 this.cserve.persistItems();
+this.route.navigateByUrl("/cart-details")
+
 //load cart deteail with url
 
 
