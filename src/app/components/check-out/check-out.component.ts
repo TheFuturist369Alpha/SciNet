@@ -164,7 +164,6 @@ if(this.formGroup.invalid){
   purchase.user.lastName= this.formGroup.get("customer")?.value.lastName;
   purchase.user.email= this.formGroup.get("customer")?.value.email;
   purchase.user.password= this.formGroup.get("customer")?.value.password;
-  purchase.user.image="blablah";
   purchase.order.total_quantity=this.totalQuantity;
   purchase.order.total_price=parseFloat(this.totalPrice.toFixed(2));
   purchase.order.status="ORDER MADE. TRANSACTION IN PROGRESS.";

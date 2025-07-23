@@ -1,0 +1,7 @@
+<div *ngIf="service.user==null else logout">
+  <div class="flex gap-3 align-middle">
+<button mat-stroked-button routerLink="account/login">Login</button>
+      <button mat-stroked-button routerLink="account/register">Register</button></div></div>
+      <ng-template #logout>
+        <button mat-stroked-button (click)="this.logout()">Logout</button>
+      </ng-template>

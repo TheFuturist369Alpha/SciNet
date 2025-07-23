@@ -7,11 +7,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AccountService {
 
   constructor(private http:HttpClient) { }
 
   baseUrl:string=environment.sciNetBase;
+  public user!:User | null;
   
   register(value:User):Observable<any>{
     let param=new HttpParams();
@@ -19,8 +20,11 @@ export class LoginService {
     return this.http.post<User>(`${this.baseUrl}/account/register`,value);
   }
 
+  //how to get user entity from response entity
   login(value:User):Observable<any>{
-    return this.http.post<User>(`${this.baseUrl}/account/login`, value);
+    let param=new HttpParams();
+    param=param.append("useCookies", true);
+    return this.http.post<User>(`${this.baseUrl}/account/login`, value, /*{param, withCredentials:true}*/);
   }
 
 
